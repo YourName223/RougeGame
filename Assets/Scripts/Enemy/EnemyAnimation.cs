@@ -35,9 +35,37 @@ public class EnemyAnimation : MonoBehaviour
         {
             Move(direction);
         }
+        else if (distanceToPlayer < aggroRange)
+        {
+            Look(direction);
+        }
+    }
+
+    void Look(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            // Horizontal movement is dominant
+            if (direction.x > 0)
+            {
+                GetComponent<SpriteRenderer>().sprite = SpriteRight;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().sprite = SpriteLeft;
+            }
+        }
         else
         {
-            
+            // Vertical movement is dominant
+            if (direction.y > 0)
+            {
+                GetComponent<SpriteRenderer>().sprite = SpriteUp;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().sprite = SpriteDown;
+            }
         }
     }
 
@@ -49,20 +77,20 @@ public class EnemyAnimation : MonoBehaviour
             if (direction.x > 0)
             {
                 number++;
-                if (number == 44)
+                if (number == 40)
                     number = 0;
                 switch (number)
                 {
                     case 0:
                         GetComponent<SpriteRenderer>().sprite = SpriteRight;
                         break;
-                    case 11:
+                    case 10:
                         GetComponent<SpriteRenderer>().sprite = SpriteRight1;
                         break;
-                    case 22:
+                    case 20:
                         GetComponent<SpriteRenderer>().sprite = SpriteRight2;
                         break;
-                    case 33:
+                    case 30:
                         GetComponent<SpriteRenderer>().sprite = SpriteRight3;
                         break;
                 }
@@ -70,20 +98,20 @@ public class EnemyAnimation : MonoBehaviour
             else
             {
                 number++;
-                if (number == 44)
+                if (number == 40)
                     number = 0;
                 switch (number)
                 {
                     case 0:
                         GetComponent<SpriteRenderer>().sprite = SpriteLeft;
                         break;
-                    case 11:
+                    case 10:
                         GetComponent<SpriteRenderer>().sprite = SpriteLeft1;
                         break;
-                    case 22:
+                    case 20:
                         GetComponent<SpriteRenderer>().sprite = SpriteLeft2;
                         break;
-                    case 33:
+                    case 30:
                         GetComponent<SpriteRenderer>().sprite = SpriteLeft3;
                         break;
                 }
@@ -95,20 +123,20 @@ public class EnemyAnimation : MonoBehaviour
             if (direction.y > 0)
             {
                 number++;
-                if (number == 44)
+                if (number == 40)
                     number = 0;
                 switch (number)
                 {
                     case 0:
                         GetComponent<SpriteRenderer>().sprite = SpriteUp;
                         break;
-                    case 11:
+                    case 10:
                         GetComponent<SpriteRenderer>().sprite = SpriteUp1;
                         break;
-                    case 22:
+                    case 20:
                         GetComponent<SpriteRenderer>().sprite = SpriteUp2;
                         break;
-                    case 33:
+                    case 30:
                         GetComponent<SpriteRenderer>().sprite = SpriteUp3;
                         break;
                 }
@@ -116,20 +144,20 @@ public class EnemyAnimation : MonoBehaviour
             else
             {
                 number++;
-                if (number == 44)
+                if (number == 40)
                     number = 0;
                 switch (number)
                 {
                     case 0:
                         GetComponent<SpriteRenderer>().sprite = SpriteDown;
                         break;
-                    case 11:
+                    case 10:
                         GetComponent<SpriteRenderer>().sprite = SpriteDown1;
                         break;
-                    case 22:
+                    case 20:
                         GetComponent<SpriteRenderer>().sprite = SpriteDown2;
                         break;
-                    case 33:
+                    case 30:
                         GetComponent<SpriteRenderer>().sprite = SpriteDown3;
                         break;
                 }

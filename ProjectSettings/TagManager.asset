@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,23 +21,23 @@ TagManager:
   - 
   - 
   - 
+  - Enemy
+  - Wall
+  - Interactable
+  - Chest
+  - Player
+  - Bullet
   - 
   - 
   - 
   - 
   - 
+  - RollingPlayer
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - GUI
   m_SortingLayers:
   - name: Default
     uniqueID: 0
