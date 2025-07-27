@@ -17,7 +17,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= amount;
 
-
         StartCoroutine(FlashDamageSprite());
 
         if (currentHealth <= 0)
@@ -31,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
         currentSprite = GetComponent<SpriteRenderer>().sprite;
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         sr.sprite = SpriteDmg;
-        yield return new WaitForSeconds(0.25f); // 1/4 second
+        yield return new WaitForSeconds(0.25f);
         sr.sprite = currentSprite;
     }
 

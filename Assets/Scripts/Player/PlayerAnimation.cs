@@ -16,26 +16,31 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Animate();
+    }
+
+    private void Animate() 
+    {
         if (playerMovement != null && playerMovement.isRolling)
             return;
 
         if (Input.GetKey(KeyCode.A))
         {
             number++;
-            if (number == 40)
+            if (number == 32)
                 number = 0;
             switch (number)
             {
                 case 0:
                     GetComponent<SpriteRenderer>().sprite = SpriteLeft;
                     break;
-                case 10:
+                case 8:
                     GetComponent<SpriteRenderer>().sprite = SpriteLeft1;
                     break;
-                case 20:
+                case 16:
                     GetComponent<SpriteRenderer>().sprite = SpriteLeft2;
                     break;
-                case 30:
+                case 24:
                     GetComponent<SpriteRenderer>().sprite = SpriteLeft3;
                     break;
             }
@@ -43,20 +48,20 @@ public class PlayerAnimation : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             number++;
-            if (number == 40)
+            if (number == 32)
                 number = 0;
             switch (number)
             {
                 case 0:
                     GetComponent<SpriteRenderer>().sprite = SpriteRight;
                     break;
-                case 10:
+                case 8:
                     GetComponent<SpriteRenderer>().sprite = SpriteRight1;
                     break;
-                case 20:
+                case 16:
                     GetComponent<SpriteRenderer>().sprite = SpriteRight2;
                     break;
-                case 30:
+                case 24:
                     GetComponent<SpriteRenderer>().sprite = SpriteRight3;
                     break;
             }
@@ -64,20 +69,20 @@ public class PlayerAnimation : MonoBehaviour
         else if (Input.GetKey(KeyCode.W))
         {
             number++;
-            if (number == 40)
+            if (number == 32)
                 number = 0;
             switch (number)
             {
                 case 0:
                     GetComponent<SpriteRenderer>().sprite = SpriteUp;
                     break;
-                case 10:
+                case 8:
                     GetComponent<SpriteRenderer>().sprite = SpriteUp1;
                     break;
-                case 20:
+                case 16:
                     GetComponent<SpriteRenderer>().sprite = SpriteUp2;
                     break;
-                case 30:
+                case 24:
                     GetComponent<SpriteRenderer>().sprite = SpriteUp3;
                     break;
             }
@@ -85,20 +90,20 @@ public class PlayerAnimation : MonoBehaviour
         else if (Input.GetKey(KeyCode.S))
         {
             number++;
-            if (number == 40)
+            if (number == 32)
                 number = 0;
             switch (number)
             {
                 case 0:
                     GetComponent<SpriteRenderer>().sprite = SpriteDown;
                     break;
-                case 10:
+                case 8:
                     GetComponent<SpriteRenderer>().sprite = SpriteDown1;
                     break;
-                case 20:
+                case 16:
                     GetComponent<SpriteRenderer>().sprite = SpriteDown2;
                     break;
-                case 30:
+                case 24:
                     GetComponent<SpriteRenderer>().sprite = SpriteDown3;
                     break;
             }

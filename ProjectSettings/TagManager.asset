@@ -26,8 +26,8 @@ TagManager:
   - Interactable
   - Chest
   - Player
-  - Bullet
-  - 
+  - PlayerAttack
+  - EnemyAttack
   - 
   - 
   - 

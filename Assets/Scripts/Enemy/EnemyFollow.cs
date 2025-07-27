@@ -20,22 +20,21 @@ public class EnemyFollow : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-        // Decide behavior state
-        if (Mathf.Abs(distanceToPlayer - range) < 0.1f)
-        {
-            currentState = EnemyState.Idle;
-        }
-        else if (distanceToPlayer <= range)
+        if (distanceToPlayer < range - 0.1f)
         {
             currentState = EnemyState.MoveAway;
         }
-        else if (distanceToPlayer >= aggroRange)
+        else if (distanceToPlayer > aggroRange + 0.1f)
         {
             currentState = EnemyState.Idle;
         }
-        else if (distanceToPlayer >= range)
+        else if (distanceToPlayer > range + 0.1f)
         {
             currentState = EnemyState.MoveCloser;
+        }
+        else if (distanceToPlayer < aggroRange)
+        {
+            currentState = EnemyState.Idle;
         }
 
         Vector2 direction = (target.position - transform.position).normalized;
