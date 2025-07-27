@@ -72,8 +72,6 @@
     <Compile Include="Assets\Scripts\Player\playerHealth.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAttack.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyFollow.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyAnimation.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

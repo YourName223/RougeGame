@@ -3,9 +3,13 @@ using UnityEngine;
 public class EnemyAttackCollision : MonoBehaviour
 {
     public int damage;
+    private bool hasHit = false;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasHit)
+            return;
+
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
 
 
@@ -14,6 +18,7 @@ public class EnemyAttackCollision : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(damage);
+                hasHit = true;
             }
         }
 

@@ -6,6 +6,8 @@ public class EnemyRangedAttack : MonoBehaviour
     public Transform attackPoint;
     public float bulletForce;
     private Transform target;
+    public float minRange;
+    public float maxRange;
     private float shootTimer = 0f;
     public float attackCooldown; // time between shots, in seconds
     public GameObject attack;
@@ -19,11 +21,16 @@ public class EnemyRangedAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shootTimer += Time.deltaTime;
-        if (shootTimer > attackCooldown)
+
+        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+        if (Mathf.Abs(distanceToPlayer) <= maxRange && Mathf.Abs(distanceToPlayer) >= minRange)
         {
-            shootTimer = 0f;
-            RangedAttack();
+            shootTimer += Time.deltaTime;
+            if (shootTimer > attackCooldown)
+            {
+                shootTimer = 0f;
+                RangedAttack();
+            }
         }
     }
 

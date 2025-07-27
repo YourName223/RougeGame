@@ -8,6 +8,7 @@ public class EnemyMeleeCollision : MonoBehaviour
     public float attackTimer;
     public Sprite SpriteAttack, SpriteAttack1, SpriteAttack2, SpriteAttack3;
     private SpriteRenderer spriteRenderer;
+    private bool hasHit = false;
 
     void Start()
     {
@@ -32,8 +33,11 @@ public class EnemyMeleeCollision : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasHit)
+            return;
+
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -41,6 +45,7 @@ public class EnemyMeleeCollision : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(damage);
+                hasHit = true;
             }
         }
     }

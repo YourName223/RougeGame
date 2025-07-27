@@ -8,7 +8,6 @@ public class PlayerAttack : MonoBehaviour
     public GameObject attack;
     private bool canAttack = true;
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && canAttack)
@@ -27,7 +26,6 @@ public class PlayerAttack : MonoBehaviour
         attackPoint.rotation = Quaternion.Euler(0f, 0f, angle);
 
         GameObject attackInstance = Instantiate(attack, attackPoint.position, attackPoint.rotation);
-        Rigidbody2D rb = attackInstance.GetComponent<Rigidbody2D>();
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerAttackCollision : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerAttackCollision : MonoBehaviour
     public Sprite SpriteAttack, SpriteAttack1, SpriteAttack2, SpriteAttack3;
     private SpriteRenderer spriteRenderer;
     private Vector3 offset;
+    private HashSet<GameObject> damagedEnemies = new HashSet<GameObject>();
 
     void Start()
     {
@@ -40,15 +42,18 @@ public class PlayerAttackCollision : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject other = collision.gameObject;
+
         EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.layer == LayerMask.NameToLayer("Enemy") && !damagedEnemies.Contains(other))
         {
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
+                damagedEnemies.Add(other);
             }
         }
     }
