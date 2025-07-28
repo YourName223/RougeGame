@@ -19,7 +19,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 direction = target.position - transform.position;
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
         if (canAttack && Mathf.Abs(distanceToPlayer) <= meleeRange) 
@@ -38,8 +37,9 @@ public class EnemyMeleeAttack : MonoBehaviour
         attackPoint.rotation = Quaternion.Euler(0f, 0f, angle);
 
         GameObject attackInstance = Instantiate(attack, attackPoint.position, attackPoint.rotation);
-        Rigidbody2D rb = attackInstance.GetComponent<Rigidbody2D>();
         attackInstance.transform.parent = transform;
+
+        attackInstance.GetComponent<EnemyMeleeCollision>().Init(transform); // Assign enemy directly
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;

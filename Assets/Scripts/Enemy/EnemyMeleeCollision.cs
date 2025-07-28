@@ -5,16 +5,24 @@ public class EnemyMeleeCollision : MonoBehaviour
 {
     public int damage;
     private Transform player;
+    private Transform enemy;
+    public int knockbackPower;
     public float attackTimer;
     public Sprite SpriteAttack, SpriteAttack1, SpriteAttack2, SpriteAttack3;
     private SpriteRenderer spriteRenderer;
     private bool hasHit = false;
+    private Vector3 offset;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindWithTag("Player").transform;  // Find player by tag
         StartCoroutine(Attack());
+    }
+
+    void Update()
+    {
+        transform.position = enemy.position + offset;  // Follow player position with offset
     }
 
     private IEnumerator Attack()
@@ -38,15 +46,24 @@ public class EnemyMeleeCollision : MonoBehaviour
         if (hasHit)
             return;
 
-        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        PlayerHealth playerHP = collision.gameObject.GetComponent<PlayerHealth>();
+        PlayerMovement playerMov = collision.gameObject.GetComponent<PlayerMovement>();
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            if (player != null)
+            if (playerHP != null)
             {
-                player.TakeDamage(damage);
+                playerMov.KnockBack((player.position - transform.position).normalized, knockbackPower);
+
+                playerHP.TakeDamage(damage);
                 hasHit = true;
             }
         }
+    }
+
+    public void Init(Transform enemyTransform)
+    {
+        enemy = enemyTransform;
+        offset = transform.position - enemy.position;
     }
 }

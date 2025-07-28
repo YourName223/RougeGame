@@ -2,26 +2,27 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
-    private Animator anim;
-
     private Transform target;
     public float speed;
     public float range;
     public float aggroRange;
     private Rigidbody2D rb;
+    private HandleAnimation animationHandler;
+    private Vector2 _knockBack;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        anim = GetComponent<Animator>();
+        animationHandler = GetComponent<HandleAnimation>();
     }
 
     void FixedUpdate()
     {
+        _knockBack *= 0.89f;
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-        Vector2 direction = (target.position - transform.position);
+        Vector2 direction = target.position - transform.position;
 
         if (direction.magnitude > 1)
         {
@@ -30,19 +31,29 @@ public class EnemyFollow : MonoBehaviour
 
         if (distanceToPlayer < range - 0.2f)
         {
-            anim.SetFloat("x", -direction.x);
-            anim.SetFloat("y", -direction.y);
-            rb.MovePosition(rb.position + -direction * speed * Time.deltaTime);
+            direction = -direction;
+            animationHandler.SetState(State.Walking);
         }
         else if (distanceToPlayer > aggroRange + 0.2f)
         {
-            //set anim.SetFloat("x" and "y") to 0, and add idle animation for 0,0)
+            direction = Vector2.zero;
+            animationHandler.SetState(State.Idle);
         }
         else if (distanceToPlayer > range + 0.2f)
         {
-            anim.SetFloat("x", direction.x);
-            anim.SetFloat("y", direction.y);
-            rb.MovePosition(rb.position + direction * speed * Time.deltaTime);
+            animationHandler.SetState(State.Walking);
         }
+        else
+        {
+            direction = Vector2.zero;
+            animationHandler.SetState(State.Idle);
+        }
+
+        animationHandler.x = direction.x;
+        rb.linearVelocity = _knockBack + direction * speed;
+    }
+    public void KnockBack(Vector2 knockbackDirection, int knockbackSpeed)
+    {
+        _knockBack = knockbackDirection * knockbackSpeed;
     }
 }

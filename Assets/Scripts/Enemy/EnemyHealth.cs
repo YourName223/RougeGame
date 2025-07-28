@@ -3,14 +3,15 @@ using System.Collections;
 
 public class EnemyHealth : MonoBehaviour
 {
+    private HandleAnimation animationHandler;
+
     public int maxHealth;
     private int currentHealth;
-    public Sprite SpriteDmg;
-    private Sprite currentSprite;
 
     void Start()
     {
         currentHealth = maxHealth;
+        animationHandler = GetComponent<HandleAnimation>();
     }
 
     public void TakeDamage(int amount)
@@ -21,22 +22,21 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
 
     private IEnumerator FlashDamageSprite()
     {
-        currentSprite = GetComponent<SpriteRenderer>().sprite;
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        sr.sprite = SpriteDmg;
-        yield return new WaitForSeconds(0.25f);
-        sr.sprite = currentSprite;
+        animationHandler.SetState(State.Hurt);
+        yield return new WaitForSeconds(0.20f);
     }
 
 
-    void Die()
+    private IEnumerator Die()
     {
+        animationHandler.SetState(State.Dying);
+        yield return new WaitForSeconds(1.20f);
         Destroy(gameObject);
     }
 }

@@ -6,11 +6,12 @@ public class PlayerAttackCollision : MonoBehaviour
 {
     public int damage;
     private Transform player;
-    public float attackTimer;
+    public int knockbackPower;
+    private float attackTimer = 0.3f;
     public Sprite SpriteAttack, SpriteAttack1, SpriteAttack2, SpriteAttack3;
     private SpriteRenderer spriteRenderer;
     private Vector3 offset;
-    private HashSet<GameObject> damagedEnemies = new HashSet<GameObject>();
+    private HashSet<GameObject> damagedEnemies = new();
 
     void Start()
     {
@@ -19,7 +20,6 @@ public class PlayerAttackCollision : MonoBehaviour
         offset = transform.position - player.position;  // Store relative offset
         StartCoroutine(Attack());
     }
-
 
     void Update()
     {
@@ -44,15 +44,19 @@ public class PlayerAttackCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
         GameObject other = collision.gameObject;
 
-        EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
+        EnemyHealth enemyHP = collision.gameObject.GetComponent<EnemyHealth>();
+        EnemyFollow enemyMov = collision.gameObject.GetComponent<EnemyFollow>();
 
         if (other.layer == LayerMask.NameToLayer("Enemy") && !damagedEnemies.Contains(other))
         {
-            if (enemy != null)
+            if (enemyHP != null)
             {
-                enemy.TakeDamage(damage);
+                enemyMov.KnockBack(((Vector3)body.position - transform.position).normalized, knockbackPower);
+
+                enemyHP.TakeDamage(damage);
                 damagedEnemies.Add(other);
             }
         }

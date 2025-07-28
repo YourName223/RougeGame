@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyRangedAttack : MonoBehaviour
 {
-    private float timer;
     public Transform attackPoint;
     public float bulletForce;
     private Transform target;

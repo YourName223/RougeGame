@@ -4,74 +4,55 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Animator anim;
-
-    public int speed = 5;
+    public float speed;
     private Rigidbody2D characterBody;
-    private Vector2 velocity;
     private Vector2 inputMovement;
-
-    private Sprite currentSprite;
-    private float x;
-    private float y;
+    private HandleAnimation animationHandler;
     private bool canRoll = true;
-    private string rollingDirection;
     public bool isRolling = false;
     public float rollingPower;
     public float rollingTime;
     public float rollingCooldown;
+    private Vector2 _knockBack;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        velocity = new Vector2(speed, speed);
         characterBody = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        animationHandler = GetComponent<HandleAnimation>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update() 
     {
-        anim.SetBool("isRolling", isRolling);
-
+        animationHandler.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - characterBody.position.x;
         if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll)
         {
             StartCoroutine(Roll());
-        }
-
-        x = Input.GetAxisRaw("Horizontal");
-        y = Input.GetAxisRaw("Vertical");
-
-        anim.SetFloat("x", x);
-        anim.SetFloat("y", y);
-
-        inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (inputMovement.magnitude > 1)
-        {
-            inputMovement.Normalize();
         }
     }
 
     private void FixedUpdate()
     {
-        anim.SetBool("isRolling", isRolling);
+        inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _knockBack *= 0.89f;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll)
+        if (inputMovement.magnitude == 0)
         {
-            StartCoroutine(Roll());
+            animationHandler.SetState(State.Idle);
+        }
+        else
+        {
+            animationHandler.SetState(State.Walking);
         }
 
-        x = Input.GetAxisRaw("Horizontal");
-        y = Input.GetAxisRaw("Vertical");
-
-        anim.SetFloat("x", x);
-        anim.SetFloat("y", y);
+        if (inputMovement.magnitude > 1)
+        {
+            inputMovement.Normalize();
+        }
 
         if (isRolling == true) return; // Don't move normally while rolling
 
-        Vector2 delta = inputMovement * velocity * Time.deltaTime;
-        Vector2 newPosition = characterBody.position + delta;
-        characterBody.MovePosition(newPosition);
+        characterBody.linearVelocity = _knockBack + inputMovement * speed;
     }
 
     private IEnumerator Roll()
@@ -83,10 +64,11 @@ public class PlayerMovement : MonoBehaviour
         if (rollDirection == Vector2.zero)
             rollDirection = Vector2.right; // default direction if idle
 
+        animationHandler.SetState(State.Rolling);
+
         gameObject.layer = LayerMask.NameToLayer("RollingPlayer");
 
         float elapsed = 0f;
-        float frameDuration = rollingTime / 4;
 
         while (elapsed < rollingTime)
         {
@@ -107,5 +89,10 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(rollingCooldown);
         canRoll = true;
+    }
+
+    public void KnockBack(Vector2 knockbackDirection, int knockbackSpeed)
+    {
+        _knockBack = knockbackDirection* knockbackSpeed;
     }
 }
