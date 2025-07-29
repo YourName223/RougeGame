@@ -13330,6 +13330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 0
+  isDead: 0
   currentState: 0
 --- !u!1001 &623835591
 PrefabInstance:
@@ -13647,7 +13648,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 878330354, guid: 07ef84fab49b4804a8b6dd5af41386dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -13783,6 +13784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 0
+  isDead: 0
   currentState: 0
 --- !u!114 &1308540314
 MonoBehaviour:
@@ -13796,10 +13798,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc3c6229261572458aff6627c89134f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 814692369}
-  attackCooldown: 0.3
-  attackSpeed: 0.5
-  attack: {fileID: 6143033489488257793, guid: 593e74bbbe5dc6d47a89625b642528d7, type: 3}
+  attackCooldown: 0.5
+  attackSpeed: 0.4
+  attackPrefab: {fileID: 2126270580377663238, guid: 6827479825b02d144b2c0927da1aebaa, type: 3}
 --- !u!114 &1308540315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13826,6 +13827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  characterBody: {fileID: 0}
+  inputMovement: {x: 0, y: 0}
   isRolling: 0
   rollingPower: 8
   rollingTime: 0.4
@@ -14107,10 +14110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4863fbe6723a4134c9b1465bcc055d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 1538265619}
   attackCooldown: 1
-  meleeRange: 2
-  attack: {fileID: 6143033489488257793, guid: 2d9bbc825cdb01840b953f5310f71592, type: 3}
+  meleeRange: 1.5
+  attackPrefab: {fileID: 6119229347213580880, guid: 03c12d6fa898335418b5998d91568b25, type: 3}
 --- !u!114 &1713842034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14124,6 +14126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 0
+  isDead: 0
   currentState: 0
 --- !u!114 &1713842035
 MonoBehaviour:

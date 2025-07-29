@@ -5,8 +5,8 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    private Rigidbody2D characterBody;
-    private Vector2 inputMovement;
+    public Rigidbody2D characterBody;
+    public Vector2 inputMovement;
     private HandleAnimation animationHandler;
     private bool canRoll = true;
     public bool isRolling = false;
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         canRoll = true;
     }
 
-    public void KnockBack(Vector2 knockbackDirection, int knockbackSpeed)
+    public void KnockBack(Vector2 knockbackDirection, float knockbackSpeed)
     {
         _knockBack = knockbackDirection* knockbackSpeed;
     }

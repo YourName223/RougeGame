@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
@@ -19,6 +20,12 @@ public class EnemyFollow : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (animationHandler.isDead)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         _knockBack *= 0.89f;
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
@@ -49,10 +56,12 @@ public class EnemyFollow : MonoBehaviour
             animationHandler.SetState(State.Idle);
         }
 
+
+
         animationHandler.x = direction.x;
         rb.linearVelocity = _knockBack + direction * speed;
     }
-    public void KnockBack(Vector2 knockbackDirection, int knockbackSpeed)
+    public void KnockBack(Vector2 knockbackDirection, float knockbackSpeed)
     {
         _knockBack = knockbackDirection * knockbackSpeed;
     }

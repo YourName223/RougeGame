@@ -18,13 +18,14 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
- 
-        StartCoroutine(FlashDamageSprite());
 
         if (currentHealth <= 0)
         {
             Die();
+            return;
         }
+
+        StartCoroutine(FlashDamageSprite());
     }
 
     private IEnumerator FlashDamageSprite()

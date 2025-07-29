@@ -4,42 +4,15 @@ using System.Collections.Generic;
 
 public class PlayerAttackCollision : MonoBehaviour
 {
+    private Animator anim;
+    public Collider2D attackCollider;
     public int damage;
-    private Transform player;
     public int knockbackPower;
-    private float attackTimer = 0.3f;
-    public Sprite SpriteAttack, SpriteAttack1, SpriteAttack2, SpriteAttack3;
-    private SpriteRenderer spriteRenderer;
-    private Vector3 offset;
-    private HashSet<GameObject> damagedEnemies = new();
+    public HashSet<GameObject> damagedEnemies = new();
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        player = GameObject.FindWithTag("Player").transform;  // Find player by tag
-        offset = transform.position - player.position;  // Store relative offset
-        StartCoroutine(Attack());
-    }
-
-    void Update()
-    {
-        transform.position = player.position + offset;  // Follow player position with offset
-    }
-
-    private IEnumerator Attack()
-    {
-        yield return new WaitForSeconds(attackTimer / 4);
-        spriteRenderer.sprite = SpriteAttack1;
-
-        yield return new WaitForSeconds(attackTimer / 4);
-        spriteRenderer.sprite = SpriteAttack2;
-
-        yield return new WaitForSeconds(attackTimer / 4);
-        spriteRenderer.sprite = SpriteAttack3;
-
-        yield return new WaitForSeconds(attackTimer / 4);
-        spriteRenderer.sprite = SpriteAttack;
-        Destroy(gameObject);
+        anim = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,5 +33,14 @@ public class PlayerAttackCollision : MonoBehaviour
                 damagedEnemies.Add(other);
             }
         }
+    }
+
+    public IEnumerator Animate()    
+    {
+        anim.Play("PlayerMeleeAnimation");
+
+        yield return new WaitForSeconds(0.6f);
+
+        anim.Play("IdleAnimation");
     }
 }

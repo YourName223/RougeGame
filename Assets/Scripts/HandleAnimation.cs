@@ -14,7 +14,7 @@ public class HandleAnimation : MonoBehaviour
 {
     private Animator anim;
     public float x;
-    private bool isDead = false;
+    public bool isDead = false;
     private SpriteRenderer spriteRenderer;
     public State currentState = State.Idle;
 
@@ -44,7 +44,7 @@ public class HandleAnimation : MonoBehaviour
         {
             return;
         }
-
+        
         if ((stateInfo.IsName("HurtAnimation") || stateInfo.IsName("RollingAnimation")) && stateInfo.normalizedTime < 1f)
         {
             return;

@@ -3,24 +3,50 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public Transform attackPoint;
     public float attackCooldown;
-    public float attackSpeed = 0.5f;
-    public GameObject attack;
+    public float attackSpeed;
+    public GameObject attackPrefab; // Prefab reference
+    private GameObject attackObject;
     private PlayerMovement playerMovement;
     private bool canAttack = true;
     private float originalSpeed;
+    private Collider2D attackCollider;
+    private Vector2 direction;
+    SpriteRenderer spriteRenderer;
+
 
 
     void Start()
     {
-        // Find the PlayerMovement component on the same GameObject
+        attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity);
+        attackCollider = attackObject.GetComponent<Collider2D>();
+        attackCollider.enabled = false; // Ensure off at start
+        attackObject.SetActive(true); //Check if needed
         playerMovement = GetComponent<PlayerMovement>();
         originalSpeed = playerMovement.speed;
+        spriteRenderer = attackObject.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
+        // Find the PlayerMovement component on the same GameObject
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        direction = mouseWorldPos - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        if (direction.x < 0)
+        {
+            spriteRenderer.flipX = true;
+            angle -= 180;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, angle));
+
         if (Input.GetMouseButtonDown(0) && canAttack)
         {
             StartCoroutine(Attack());
@@ -29,22 +55,32 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        playerMovement.speed = 3 * originalSpeed / 5;
+        PlayerAttackCollision pac = attackObject.GetComponent<PlayerAttackCollision>();
+        pac.damagedEnemies.Clear();
+
+        pac.StartCoroutine(pac.Animate());
+
+        attackCollider.enabled = true;
+
+
+        playerMovement.speed = originalSpeed / 2f;
 
         canAttack = false;
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector2 direction = mouseWorldPos - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        attackPoint.rotation = Quaternion.Euler(0f, 0f, angle);
+        
+        yield return new WaitForSeconds(attackSpeed / 1.5f);
 
-        GameObject attackInstance = Instantiate(attack, attackPoint.position, attackPoint.rotation);
+        if (playerMovement.inputMovement == Vector2.zero)
+        {
+            playerMovement.KnockBack(direction, 1.7f);
+        }
 
-        yield return new WaitForSeconds(attackSpeed);
-
+        yield return new WaitForSeconds(attackSpeed / 3);
+        
         playerMovement.speed = originalSpeed;
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+        attackCollider.enabled = false;
     }
 }

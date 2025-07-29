@@ -3,23 +3,48 @@ using System.Collections;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
-    public Transform attackPoint;
     public float attackCooldown;
     public float meleeRange;
-    public GameObject attack;
+    private float distanceToPlayer;
+    public GameObject attackPrefab; // Prefab reference
+    private GameObject attackObject;
     private Transform target;
+    private Vector2 direction;
+    private Collider2D attackCollider;
     private bool canAttack = true;
+    private float angle;
+    SpriteRenderer spriteRenderer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity);
+        attackCollider = attackObject.GetComponent<Collider2D>();
+        attackCollider.enabled = false; // Ensure off at start
+        attackObject.SetActive(true); //Check if needed
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        spriteRenderer = attackObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+        distanceToPlayer = Vector2.Distance(transform.position, target.position);
+
+        direction = target.position - transform.position;
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        if (direction.x < 0)
+        {
+            spriteRenderer.flipX = true;
+            angle -= 180;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+
+        attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, angle));
 
         if (canAttack && Mathf.Abs(distanceToPlayer) <= meleeRange) 
         {
@@ -29,19 +54,17 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     private IEnumerator MeleeAttack()
     {
+        EnemyMeleeCollision Emc = attackObject.GetComponent<EnemyMeleeCollision>();
+        Emc.hasHit = false;
+        attackCollider.enabled = true;
+
+        Emc.StartCoroutine(Emc.Animate());
+
         canAttack = false;
-
-        yield return new WaitForSeconds(attackCooldown / 10);
-        Vector2 direction = target.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        attackPoint.rotation = Quaternion.Euler(0f, 0f, angle);
-
-        GameObject attackInstance = Instantiate(attack, attackPoint.position, attackPoint.rotation);
-        attackInstance.transform.parent = transform;
-
-        attackInstance.GetComponent<EnemyMeleeCollision>().Init(transform); // Assign enemy directly
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+
+        attackCollider.enabled = false;
     }
 }
