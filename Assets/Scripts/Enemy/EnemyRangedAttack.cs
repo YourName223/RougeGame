@@ -2,32 +2,38 @@ using UnityEngine;
 
 public class EnemyRangedAttack : MonoBehaviour
 {
-    public Transform attackPoint;
-    public float bulletForce;
-    private Transform target;
-    public float minRange;
-    public float maxRange;
-    private float shootTimer = 0f;
-    public float attackCooldown; // time between shots, in seconds
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private float bulletForce;
+    [SerializeField] private float minRange;
+    [SerializeField] private float maxRange;
+
     public GameObject attack;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float _angle;
+    private float _shootCooldown;
+    private float _distanceToPlayer;
+
+    private Transform _target;
+    private Vector2 _direction;
+    private GameObject _bulletInstance;
+    private Rigidbody2D _rb;
+
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _shootCooldown = 0;
+        _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
-        if (Mathf.Abs(distanceToPlayer) <= maxRange && Mathf.Abs(distanceToPlayer) >= minRange)
+        //Checks if distance to player is within range and if entity can shoot
+        _distanceToPlayer = Vector2.Distance(transform.position, _target.position);
+        if (Mathf.Abs(_distanceToPlayer) <= maxRange && Mathf.Abs(_distanceToPlayer) >= minRange)
         {
-            shootTimer += Time.deltaTime;
-            if (shootTimer > attackCooldown)
+            _shootCooldown += Time.deltaTime;
+            if (_shootCooldown > attackCooldown)
             {
-                shootTimer = 0f;
+                _shootCooldown = 0f;
                 RangedAttack();
             }
         }
@@ -35,12 +41,11 @@ public class EnemyRangedAttack : MonoBehaviour
 
     public void RangedAttack()
     {
-        Vector2 direction = target.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        attackPoint.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+        _direction = _target.position - transform.position;
+        _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
 
-        GameObject bulletInstance = Instantiate(attack, attackPoint.position, attackPoint.rotation);
-        Rigidbody2D rb = bulletInstance.GetComponent<Rigidbody2D>();
-        rb.AddForce(attackPoint.up * bulletForce, ForceMode2D.Impulse);
+        _bulletInstance = Instantiate(attack, transform.position, Quaternion.Euler(0f, 0f, _angle - 90));//Adds bullet to world
+        _rb = _bulletInstance.GetComponent<Rigidbody2D>();
+        _rb.AddForce(_direction.normalized * bulletForce, ForceMode2D.Impulse);
     }
 }

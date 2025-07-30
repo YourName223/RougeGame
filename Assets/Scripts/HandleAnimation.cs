@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public enum State
 {
     Idle,
@@ -12,70 +11,77 @@ public enum State
 
 public class HandleAnimation : MonoBehaviour
 {
-    private Animator anim;
-    public float x;
-    public bool isDead = false;
-    private SpriteRenderer spriteRenderer;
-    public State currentState = State.Idle;
+
+    [HideInInspector] public bool isDead = false;
+    [HideInInspector] public float x;
+
+    private State _currentState;
+    private Animator _anim;
+    private SpriteRenderer _spriteRenderer;
+    private AnimatorStateInfo _stateInfo;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
+        _currentState = State.Idle;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Makes the entity look in the direction they are walking
         if (x < 0)
-            spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = true;
         else if (x > 0)
-            spriteRenderer.flipX = false;
-
-        SetAnimation();
+            _spriteRenderer.flipX = false;
     }
 
     private void SetAnimation()
     {
-        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-
         if (isDead)
         {
             return;
         }
-        
-        if ((stateInfo.IsName("HurtAnimation") || stateInfo.IsName("RollingAnimation")) && stateInfo.normalizedTime < 1f)
+
+        _stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
+
+        //Checks if entity is hurting or rolling
+        if ((_stateInfo.IsName("HurtAnimation") || _stateInfo.IsName("RollingAnimation")) && _stateInfo.normalizedTime < 1)
         {
             return;
         }
 
-        switch (currentState)
+        //Plays animation compared to state
+        switch (_currentState)
         {
             case State.Idle:
-                anim.Play("IdleAnimation");
+                _anim.Play("IdleAnimation");
                 break;
             case State.Walking:
-                anim.Play("WalkingAnimation");
+                _anim.Play("WalkingAnimation");
                 break;
             case State.Rolling:
-                anim.Play("RollingAnimation");
+                _anim.Play("RollingAnimation");
                 break;
             case State.Hurt:
-                anim.Play("HurtAnimation");
+                _anim.Play("HurtAnimation");
                 break;
             case State.Attacking:
-                anim.Play("AttackAnimation");
+                _anim.Play("AttackAnimation");
                 break;
             case State.Dying:
                 isDead = true;
-                anim.Play("DeathAnimation");
+                _anim.Play("DeathAnimation");
                 break;
         }
     }
 
     public void SetState(State newState)
     {
-        currentState = newState;
+        _currentState = newState;
+
+        SetAnimation();
     }
 }

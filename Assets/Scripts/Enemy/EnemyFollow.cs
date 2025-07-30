@@ -3,63 +3,63 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
-    private Transform target;
-    public float speed;
-    public float range;
-    public float aggroRange;
-    private Rigidbody2D rb;
-    private HandleAnimation animationHandler;
+    [SerializeField] private float aggroRange;
+    [SerializeField] private float range;
+    [SerializeField] private float speed;
+
+    private float _distanceToPlayer;
+    private Vector2 _direction;
+
+    private Transform _target;
+    private Rigidbody2D _rb;
+    private HandleAnimation _animationHandler;
     private Vector2 _knockBack;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        animationHandler = GetComponent<HandleAnimation>();
+        _rb = GetComponent<Rigidbody2D>();
+        _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _animationHandler = GetComponent<HandleAnimation>();
     }
 
     void FixedUpdate()
     {
-        if (animationHandler.isDead)
+        if (_animationHandler.isDead)
         {
-            rb.linearVelocity = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
             return;
         }
 
-        _knockBack *= 0.89f;
-        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+        _knockBack *= 0.89f;//Reduces _knockBack over time
+        _distanceToPlayer = Vector2.Distance(transform.position, _target.position);
 
-        Vector2 direction = target.position - transform.position;
+        _direction = _target.position - transform.position;
 
-        if (direction.magnitude > 1)
-        {
-            direction.Normalize();
-        }
+        _direction.Normalize();
 
-        if (distanceToPlayer < range - 0.2f)
+        //Checks if enemy should move closer, futher away, or stand still
+        if (_distanceToPlayer < range - 0.2f)
         {
-            direction = -direction;
-            animationHandler.SetState(State.Walking);
+            _direction = -_direction;
+            _animationHandler.SetState(State.Walking);
         }
-        else if (distanceToPlayer > aggroRange + 0.2f)
+        else if (_distanceToPlayer > aggroRange + 0.2f)
         {
-            direction = Vector2.zero;
-            animationHandler.SetState(State.Idle);
+            _direction = Vector2.zero;
+            _animationHandler.SetState(State.Idle);
         }
-        else if (distanceToPlayer > range + 0.2f)
+        else if (_distanceToPlayer > range + 0.2f)
         {
-            animationHandler.SetState(State.Walking);
+            _animationHandler.SetState(State.Walking);
         }
         else
         {
-            direction = Vector2.zero;
-            animationHandler.SetState(State.Idle);
+            _direction = Vector2.zero;
+            _animationHandler.SetState(State.Idle);
         }
 
-
-
-        animationHandler.x = direction.x;
-        rb.linearVelocity = _knockBack + direction * speed;
+        _animationHandler.x = _direction.x;
+        _rb.linearVelocity = _knockBack + _direction * speed;
     }
     public void KnockBack(Vector2 knockbackDirection, float knockbackSpeed)
     {

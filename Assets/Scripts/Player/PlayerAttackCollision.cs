@@ -4,31 +4,35 @@ using System.Collections.Generic;
 
 public class PlayerAttackCollision : MonoBehaviour
 {
-    private Animator anim;
-    public Collider2D attackCollider;
-    public int damage;
-    public int knockbackPower;
-    public HashSet<GameObject> damagedEnemies = new();
+    public HashSet<GameObject> damagedEnemies;//List of enemies hit by this attack
+
+    [SerializeField] private int damage;
+    [SerializeField] private int knockbackPower;
+
+    [SerializeField] private Collider2D attackCollider;
+
+    private Animator _anim;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        damagedEnemies = new();
+        _anim = GetComponent<Animator>();
     }
 
+    //Checks for collsion, if enemy and havent hit it, deal dmg
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
         GameObject other = collision.gameObject;
-
-        EnemyHealth enemyHP = collision.gameObject.GetComponent<EnemyHealth>();
-        EnemyFollow enemyMov = collision.gameObject.GetComponent<EnemyFollow>();
 
         if (other.layer == LayerMask.NameToLayer("Enemy") && !damagedEnemies.Contains(other))
         {
+            EnemyHealth enemyHP = collision.gameObject.GetComponent<EnemyHealth>();
+            EnemyFollow enemyMov = collision.gameObject.GetComponent<EnemyFollow>();
+            Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
+
             if (enemyHP != null)
             {
-                enemyMov.KnockBack(((Vector3)body.position - transform.position).normalized, knockbackPower);
-
+                enemyMov.KnockBack((body.position - (Vector2)transform.position).normalized, knockbackPower);
                 enemyHP.TakeDamage(damage);
                 damagedEnemies.Add(other);
             }
@@ -37,10 +41,8 @@ public class PlayerAttackCollision : MonoBehaviour
 
     public IEnumerator Animate()    
     {
-        anim.Play("PlayerMeleeAnimation");
-
+        _anim.Play("PlayerMeleeAnimation");
         yield return new WaitForSeconds(0.6f);
-
-        anim.Play("IdleAnimation");
+        _anim.Play("IdleAnimation");
     }
 }

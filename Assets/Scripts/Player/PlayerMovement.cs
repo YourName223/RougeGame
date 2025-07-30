@@ -5,44 +5,56 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public Rigidbody2D characterBody;
-    public Vector2 inputMovement;
-    private HandleAnimation animationHandler;
-    private bool canRoll = true;
-    public bool isRolling = false;
-    public float rollingPower;
-    public float rollingTime;
-    public float rollingCooldown;
-    private Vector2 _knockBack;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private float rollingPower;
+    [SerializeField] private float rollingTime;
+    [SerializeField] private float rollingCooldown;
+
+    private Vector2 inputMovement;
+
+    private bool _canRoll;
+    private bool isRolling;
+
+    private Rigidbody2D _characterBody;
+    private HandleAnimation _animationHandler;
+    private Vector2 _knockBack;
+    private Vector2 _direction;
+    private Vector3 _mouseWorldPos;
+
     void Start()
     {
-        characterBody = GetComponent<Rigidbody2D>();
-        animationHandler = GetComponent<HandleAnimation>();
+        _canRoll = true;
+        isRolling = false;
+        _characterBody = GetComponent<Rigidbody2D>();
+        _animationHandler = GetComponent<HandleAnimation>();
     }
 
     private void Update() 
     {
-        animationHandler.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - characterBody.position.x;
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canRoll)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _canRoll)
         {
             StartCoroutine(Roll());
         }
     }
-
     private void FixedUpdate()
     {
         inputMovement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _knockBack *= 0.89f;
+
+        _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        _direction = _mouseWorldPos - transform.position;
+
+        _animationHandler.x = _direction.x;
+
+        _knockBack *= 0.89f;//Reduces _knockback over time
 
         if (inputMovement.magnitude == 0)
         {
-            animationHandler.SetState(State.Idle);
+            _animationHandler.SetState(State.Idle);
         }
         else
         {
-            animationHandler.SetState(State.Walking);
+            _animationHandler.SetState(State.Walking);
         }
 
         if (inputMovement.magnitude > 1)
@@ -50,49 +62,59 @@ public class PlayerMovement : MonoBehaviour
             inputMovement.Normalize();
         }
 
-        if (isRolling == true) return; // Don't move normally while rolling
-
-        characterBody.linearVelocity = _knockBack + inputMovement * speed;
+        //Only move if arent rolling
+        if (!isRolling)
+        {
+            _characterBody.linearVelocity = _knockBack + inputMovement * speed;
+        }
     }
 
     private IEnumerator Roll()
     {
-        canRoll = false;
+        _canRoll = false;
         isRolling = true;
 
-        Vector2 rollDirection = inputMovement.normalized;
-        if (rollDirection == Vector2.zero)
-            rollDirection = Vector2.right; // default direction if idle
+        if (inputMovement == Vector2.zero)
+            inputMovement = Vector2.right;
 
-        animationHandler.SetState(State.Rolling);
+        _animationHandler.SetState(State.Rolling);
 
         gameObject.layer = LayerMask.NameToLayer("RollingPlayer");
 
         float elapsed = 0f;
 
+        //Doing roll, movement speed is a sine curve
         while (elapsed < rollingTime)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / rollingTime;
 
             float curve = Mathf.Sin(t * Mathf.PI);
-            float currentSpeed = Mathf.Lerp(speed, rollingPower, curve);
+            float rollingSpeed = Mathf.Lerp(speed, rollingPower, curve);
 
-            characterBody.linearVelocity = rollDirection * currentSpeed;
+            _characterBody.linearVelocity = inputMovement * rollingSpeed;
 
             yield return null;
         }
 
-        characterBody.linearVelocity = Vector2.zero;
+        _characterBody.linearVelocity = Vector2.zero;
         isRolling = false;
         gameObject.layer = LayerMask.NameToLayer("Player");
 
         yield return new WaitForSeconds(rollingCooldown);
-        canRoll = true;
+        _canRoll = true;
     }
 
     public void KnockBack(Vector2 knockbackDirection, float knockbackSpeed)
     {
-        _knockBack = knockbackDirection* knockbackSpeed;
+        _knockBack = knockbackDirection * knockbackSpeed;
+    }
+
+    public void MeleeKnockback(Vector2 direction, float Knockback) 
+    {
+        if (inputMovement == Vector2.zero)
+        {
+            KnockBack(direction, Knockback);
+        }
     }
 }

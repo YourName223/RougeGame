@@ -3,15 +3,16 @@ using System.Collections;
 
 public class OpenChest : MonoBehaviour
 {
-    public GameObject coin;
-    public Sprite spriteChest;
+    [SerializeField] private GameObject coin;
+    [SerializeField] private Sprite OpenChestSprite;
+
+    private GameObject coinInstance;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GetComponent<SpriteRenderer>().sprite = spriteChest;
+            GetComponent<SpriteRenderer>().sprite = OpenChestSprite;
             StartCoroutine(GiveLoot());
         }
     }
@@ -19,8 +20,7 @@ public class OpenChest : MonoBehaviour
     private IEnumerator GiveLoot()
     {
         yield return new WaitForSeconds(0.25f);
-        GameObject coinInstance = Instantiate(coin, transform.position, transform.rotation);
-        yield return new WaitForSeconds(0.25f);
-        Destroy(gameObject);
+        coinInstance = Instantiate(coin, transform.position, transform.rotation);
+        Destroy(gameObject, 0.25f);
     }
 }

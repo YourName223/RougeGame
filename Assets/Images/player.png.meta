@@ -122,7 +122,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: playerRight1
+      name: player_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,21 +130,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3d3d493214ee15459a1b090790d122e
-      internalID: 188994150
+      spriteID: 0ba492103042dd249b2d1a6789216550
+      internalID: -946312178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerRight2
+      name: player_1
       rect:
         serializedVersion: 2
         x: 16
@@ -152,21 +152,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fe11396e66bd9d49a06cacbc4d47c24
-      internalID: -1042461762
+      spriteID: 155bc61cdd3d4f24fa95e16bab468587
+      internalID: 1233909529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerRight3
+      name: player_2
       rect:
         serializedVersion: 2
         x: 32
@@ -174,21 +174,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abee5ba8763182a4aba2c469efb0acef
-      internalID: -755533231
+      spriteID: dc4573e6635fb4945856b198bddcc2c9
+      internalID: -516083579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerRight4
+      name: player_3
       rect:
         serializedVersion: 2
         x: 48
@@ -196,109 +196,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92d9b587e027b2b40bc37aaff2364ed8
-      internalID: 51071884
+      spriteID: fdf66c354e68b4748b36dd917dafc2d6
+      internalID: -211978752
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRollRight1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 54
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bd897d181246ecb469f2c2065a1c67e0
-      internalID: 724548053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollRight2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 54
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb553b1083f65114fad7e8e5a36b956c
-      internalID: 2099650607
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollRight3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 54
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 702cc09d91f550e43b1f3b0118b24201
-      internalID: 1117888340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollRight4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 54
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 891376379fc0be3448e3d3e7f75ea01b
-      internalID: -1374053814
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerLeft1
+      name: player_4
       rect:
         serializedVersion: 2
         x: 0
@@ -306,21 +218,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 514f6a3ef221c6c459530d03471812e4
-      internalID: 285117795
+      spriteID: 38eae56e2e11a124eab74355baf5b2b2
+      internalID: 1279034696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerLeft2
+      name: player_5
       rect:
         serializedVersion: 2
         x: 16
@@ -328,21 +240,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0348f0e6f4ab6f344bbd98a9ec2b07dd
-      internalID: 981496341
+      spriteID: 3e4c740a9cd58534e9fadb5a84b065d8
+      internalID: -644756096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerLeft3
+      name: player_6
       rect:
         serializedVersion: 2
         x: 32
@@ -350,21 +262,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78a8660377deab64bb0ad42da448495a
-      internalID: 236820241
+      spriteID: b995fee2f06e2834abab5d3a1c9ec1a1
+      internalID: -1805658781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerLeft4
+      name: player_7
       rect:
         serializedVersion: 2
         x: 48
@@ -372,109 +284,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a938f7745e847c84987aa30d912e8e45
-      internalID: 406987715
+      spriteID: 115dd4fa111aeb54b80bb53ee13c41ea
+      internalID: 1583653621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerRollLeft1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 36
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7272813315aaf8d45a2a87e1c96dc792
-      internalID: 1653366727
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollLeft2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 36
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 400873d555aa59244a365fcc68a498c2
-      internalID: -1766457805
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollLeft3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 36
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e94d9b85c63870d4388768943122f37d
-      internalID: -25669378
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerRollLeft4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 36
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02ec47e0c58f0c74dba9d969fc1e7fe7
-      internalID: -180258830
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerDown1
+      name: player_8
       rect:
         serializedVersion: 2
         x: 0
@@ -482,21 +306,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f670f267476e78e4a9bbd91efc614bb6
-      internalID: 878330354
+      spriteID: cf41653da9c1287488a3a7ab87a9e2bd
+      internalID: 1443203750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerDown2
+      name: player_9
       rect:
         serializedVersion: 2
         x: 16
@@ -504,21 +328,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b438cc33586bed24ebc9599472428260
-      internalID: -567039765
+      spriteID: e6dd30ea0947b8742a262f3677ef2013
+      internalID: 1215935883
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerDown3
+      name: player_10
       rect:
         serializedVersion: 2
         x: 32
@@ -526,21 +350,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f79ccf984b522947961ccb16acf5606
-      internalID: -1658789524
+      spriteID: 9ffbd56d7bbb627478fd7df408af1b88
+      internalID: 1041854473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerDown4
+      name: player_11
       rect:
         serializedVersion: 2
         x: 48
@@ -548,109 +372,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dfe07710edeb964eb7479347a3da949
-      internalID: 1412541893
+      spriteID: c0d08bfcf97cc2344bebf043276e373a
+      internalID: -1473489659
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerRollDown1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 18
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09341b4b31dd7134384a516a05cf04cc
-      internalID: 1099753796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollDown2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 18
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c9179e2f21988e4fa5baa5023f98af4
-      internalID: 2123270210
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollDown3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 18
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc0ae7a052c9f4847b8b8d81719ec5eb
-      internalID: -1073042746
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollDown4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 18
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f85185bbf64b98643b70e281a5648fa0
-      internalID: 229290009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerUp1
+      name: player_12
       rect:
         serializedVersion: 2
         x: 0
@@ -658,21 +394,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9221ce76e12d23449befd58626e5977e
-      internalID: 589317596
+      spriteID: 3f28c4c1ce8720f4d8c35599b8c537f9
+      internalID: 1277876417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerUp2
+      name: player_13
       rect:
         serializedVersion: 2
         x: 16
@@ -680,21 +416,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d62928cf06bf20f45aa5ebbac7e32bdd
-      internalID: 517874636
+      spriteID: 6d111c668040bd34393f244009334e8e
+      internalID: 847505657
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerUp3
+      name: player_14
       rect:
         serializedVersion: 2
         x: 32
@@ -702,21 +438,21 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddbd37c505e982543bca921ed5c8f2a8
-      internalID: -1181137677
+      spriteID: 1b57114068266ef46931990dfc9f8c42
+      internalID: -1312978214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerUp4
+      name: player_15
       rect:
         serializedVersion: 2
         x: 48
@@ -724,103 +460,15 @@ TextureImporter:
         width: 16
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e554024dc2d2f8346b9a696dfc36df0d
-      internalID: 744310155
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollUp1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 66c6b1f289e8fe341b961696ad294d20
-      internalID: 1003911705
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollUp2
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cbcec493191dd0749bd8dc85118f4c29
-      internalID: 378388049
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollUp3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f488e0850c82ef40a4bd4f4d729a288
-      internalID: -927023361
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playerRollUp4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 0
-        width: 16
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13930de564a820546a43f8c02523a417
-      internalID: 2098018135
+      spriteID: 32b7875857a0be24386589beb591fdd8
+      internalID: 2007741102
       vertices: []
       indices: 
       edges: []
@@ -841,38 +489,22 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":18.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      PlayerRollLeft1: 1653366727
-      PlayerRollLeft2: -1766457805
-      PlayerRollLeft3: -25669378
-      PlayerRollLeft4: -180258830
-      PlayerRollRight1: 724548053
-      PlayerRollRight2: 2099650607
-      PlayerRollRight3: 1117888340
-      PlayerRollRight4: -1374053814
-      playerDown1: 878330354
-      playerDown2: -567039765
-      playerDown3: -1658789524
-      playerDown4: 1412541893
-      playerLeft1: 285117795
-      playerLeft2: 981496341
-      playerLeft3: 236820241
-      playerLeft4: 406987715
-      playerRight1: 188994150
-      playerRight2: -1042461762
-      playerRight3: -755533231
-      playerRight4: 51071884
-      playerRollDown1: 1099753796
-      playerRollDown2: 2123270210
-      playerRollDown3: -1073042746
-      playerRollDown4: 229290009
-      playerRollUp1: 1003911705
-      playerRollUp2: 378388049
-      playerRollUp3: -927023361
-      playerRollUp4: 2098018135
-      playerUp1: 589317596
-      playerUp2: 517874636
-      playerUp3: -1181137677
-      playerUp4: 744310155
+      player_0: -946312178
+      player_1: 1233909529
+      player_10: 1041854473
+      player_11: -1473489659
+      player_12: 1277876417
+      player_13: 847505657
+      player_14: -1312978214
+      player_15: 2007741102
+      player_2: -516083579
+      player_3: -211978752
+      player_4: 1279034696
+      player_5: -644756096
+      player_6: -1805658781
+      player_7: 1583653621
+      player_8: 1443203750
+      player_9: 1215935883
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

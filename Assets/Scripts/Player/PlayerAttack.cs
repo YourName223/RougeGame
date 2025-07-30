@@ -3,84 +3,87 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float attackCooldown;
-    public float attackSpeed;
-    public GameObject attackPrefab; // Prefab reference
-    private GameObject attackObject;
-    private PlayerMovement playerMovement;
-    private bool canAttack = true;
-    private float originalSpeed;
-    private Collider2D attackCollider;
-    private Vector2 direction;
-    SpriteRenderer spriteRenderer;
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private float attackSpeed;
 
+    public GameObject attackPrefab;
 
+    private bool _canAttack;
+    private float _originalSpeed;
+    private float _angle;
+
+    private Collider2D _attackCollider;
+    private GameObject _attackObject;
+    private SpriteRenderer _spriteRenderer;
+    private PlayerMovement _playerMovement;
+    private Vector2 _direction;
+    private Vector3 _mouseWorldPos;
 
     void Start()
     {
-        attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity);
-        attackCollider = attackObject.GetComponent<Collider2D>();
-        attackCollider.enabled = false; // Ensure off at start
-        attackObject.SetActive(true); //Check if needed
-        playerMovement = GetComponent<PlayerMovement>();
-        originalSpeed = playerMovement.speed;
-        spriteRenderer = attackObject.GetComponent<SpriteRenderer>();
+        _canAttack = true;
+        _attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity); //Adds _attackObject to the world
+        _attackCollider = _attackObject.GetComponent<Collider2D>();
+        _attackCollider.enabled = false;
+        _playerMovement = GetComponent<PlayerMovement>();
+        _originalSpeed = _playerMovement.speed;
+        _spriteRenderer = _attackObject.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        // Find the PlayerMovement component on the same GameObject
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RotateAttackObject();
 
-        direction = mouseWorldPos - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        if (direction.x < 0)
-        {
-            spriteRenderer.flipX = true;
-            angle -= 180;
-        }
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
-
-        attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, angle));
-
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        if (Input.GetMouseButtonDown(0) && _canAttack)
         {
             StartCoroutine(Attack());
         }
     }
 
-    private IEnumerator Attack()
+    private void RotateAttackObject() 
     {
-        PlayerAttackCollision pac = attackObject.GetComponent<PlayerAttackCollision>();
-        pac.damagedEnemies.Clear();
+        _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        pac.StartCoroutine(pac.Animate());
+        _direction = _mouseWorldPos - transform.position;
+        _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
 
-        attackCollider.enabled = true;
-
-
-        playerMovement.speed = originalSpeed / 2f;
-
-        canAttack = false;
-
-        
-        yield return new WaitForSeconds(attackSpeed / 1.5f);
-
-        if (playerMovement.inputMovement == Vector2.zero)
+        if (_direction.x < 0)
         {
-            playerMovement.KnockBack(direction, 1.7f);
+            _spriteRenderer.flipX = true;
+            _angle -= 180;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
         }
 
-        yield return new WaitForSeconds(attackSpeed / 3);
+        _attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, _angle));
+    }
+
+    private IEnumerator Attack()
+    {
+        PlayerAttackCollision PAC = _attackObject.GetComponent<PlayerAttackCollision>();
+        PAC.damagedEnemies.Clear();
+
+        PAC.StartCoroutine(PAC.Animate());
+
+        _attackCollider.enabled = true;
+
+        _playerMovement.speed = _originalSpeed / 2f;
+
+        _canAttack = false;
         
-        playerMovement.speed = originalSpeed;
+        yield return new WaitForSeconds(attackSpeed / 3);
+
+        //Pushes player if standing still and attacking
+        _playerMovement.MeleeKnockback(_direction, 1.7f);
+
+        yield return new WaitForSeconds(attackSpeed / 1.5f);
+        
+        _playerMovement.speed = _originalSpeed;
 
         yield return new WaitForSeconds(attackCooldown);
-        canAttack = true;
-        attackCollider.enabled = false;
+        _canAttack = true;
+        _attackCollider.enabled = false;
     }
 }

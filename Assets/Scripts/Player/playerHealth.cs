@@ -3,23 +3,27 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] private int maxHealth;
 
-    private HandleAnimation animationHandler;
+    [SerializeField] private HealthBar healthBar;
 
-    public int maxHealth;
-    private int currentHealth;
+    private int _currentHealth;
+
+    private HandleAnimation _animationHandler;
 
     void Start()
     {
-        currentHealth = maxHealth;
-        animationHandler = GetComponent<HandleAnimation>();
+        _currentHealth = maxHealth;
+        _animationHandler = GetComponent<HandleAnimation>();
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        _currentHealth -= amount;
+        healthBar.SetHealth(_currentHealth);
 
-        if (currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             Die();
             return;
@@ -30,13 +34,12 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator FlashDamageSprite()
     {
-        animationHandler.SetState(State.Hurt);
+        _animationHandler.SetState(State.Hurt);
         yield return new WaitForSeconds(0.20f);
     }
 
-
     void Die()
     {
-        animationHandler.SetState(State.Dying);
+        _animationHandler.SetState(State.Dying);
     }
 }
