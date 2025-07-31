@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int maxHealth;
 
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private GameOverScreen GameOverScreen;
 
     private int _currentHealth;
 
@@ -41,5 +42,8 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         _animationHandler.SetState(State.Dying);
+
+        GameOverScreen.gameObject.SetActive(true);
+        GameOverScreen.Set();
     }
 }

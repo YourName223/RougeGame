@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
@@ -50,6 +51,11 @@ public class EnemyMeleeAttack : MonoBehaviour
         {
             StartCoroutine(MeleeAttack());
         }
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(_attackObject);
     }
 
     private IEnumerator MeleeAttack()

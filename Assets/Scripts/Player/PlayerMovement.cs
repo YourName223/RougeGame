@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rollingPower;
     [SerializeField] private float rollingTime;
     [SerializeField] private float rollingCooldown;
+    [SerializeField] private PauseScreen PauseScreen;
 
     private Vector2 inputMovement;
 
@@ -29,8 +30,18 @@ public class PlayerMovement : MonoBehaviour
         _animationHandler = GetComponent<HandleAnimation>();
     }
 
-    private void Update() 
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PauseScreen.gameObject.SetActive(true);
+            PauseScreen.Set(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseScreen.Set(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && _canRoll)
         {
             StartCoroutine(Roll());
@@ -92,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             float curve = Mathf.Sin(t * Mathf.PI);
             float rollingSpeed = Mathf.Lerp(speed, rollingPower, curve);
 
-            _characterBody.linearVelocity = inputMovement * rollingSpeed;
+            _characterBody.linearVelocity = rollingSpeed * inputMovement;
 
             yield return null;
         }
