@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
-    [SerializeField] private float attackCooldown;
-    [SerializeField] private float meleeRange;
+    [SerializeField] private float _attackCooldown;
+    [SerializeField] private float _range;
 
-    [SerializeField] private GameObject attackPrefab;
+    [SerializeField] private GameObject _attackPrefab;
 
     private bool _canAttack = true;
     private float _angle;
@@ -21,7 +20,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     void Start()
     {
-        _attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity);
+        _attackObject = Instantiate(_attackPrefab, transform.position, Quaternion.identity);
         _attackCollider = _attackObject.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
         _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -47,7 +46,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
         _attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, _angle));
 
-        if (_canAttack && Mathf.Abs(_distanceToPlayer) <= meleeRange) 
+        if (_canAttack && Mathf.Abs(_distanceToPlayer) <= _range)
         {
             StartCoroutine(MeleeAttack());
         }
@@ -68,7 +67,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
         _canAttack = false;
 
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(_attackCooldown);
         _canAttack = true;
 
         _attackCollider.enabled = false;

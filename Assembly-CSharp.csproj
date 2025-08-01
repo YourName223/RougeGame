@@ -68,6 +68,9 @@
     <Compile Include="Assets\Scripts\Player\PlayerAttack.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyFollow.cs" />
+    <Compile Include="Assets\Scripts\IAttack.cs" />
+    <Compile Include="Assets\Scripts\Enemy\AttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\AttackMeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\PauseScreen.cs" />
     <Compile Include="Assets\Scripts\GameOverScreen.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyMeleeCollision.cs" />
