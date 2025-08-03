@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour
+public class MovementPlayer : MonoBehaviour
 {
     public float speed;
 

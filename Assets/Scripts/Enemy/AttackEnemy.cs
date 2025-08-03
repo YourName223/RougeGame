@@ -8,21 +8,23 @@ public class AttackEnemy : MonoBehaviour
     [SerializeField] private float _attackCooldown;
     [SerializeField] private float _attackTimer;
     [SerializeField] private float _range;
+    [SerializeField] private float _knockbackPower;
 
-
+    private float _timer;
     private bool _canAttack = true;
     private float _angle;
     private float _distanceToPlayer;
 
-    private IAttack _attackScript;
+    private IAttackEnemy _attackScript;
     private Transform _player;
     private Vector2 _direction;
 
     void Start()
     {
+        _timer = _attackCooldown;
         _attackPrefab = Instantiate(_attackPrefab, transform.position, Quaternion.identity);
         _player = GameObject.FindWithTag("Player").transform;
-        _attackScript = _attackPrefab.GetComponent<IAttack>();
+        _attackScript = _attackPrefab.GetComponent<IAttackEnemy>();
     }
 
     void Update()
@@ -37,17 +39,16 @@ public class AttackEnemy : MonoBehaviour
             _angle -= 180;
         }
 
-        _attackScript.UpdateVariables(_dmg, _direction.x, _angle, _attackTimer, transform.position);
+        _attackScript.UpdateVariables(_knockbackPower, _dmg, _direction, _angle, _attackTimer, transform.position);
 
-        if (_canAttack && Mathf.Abs(_distanceToPlayer) <= _range)
+        if (_timer <= _attackCooldown)
         {
-            StartCoroutine(WaitForAttack());
+            _timer += Time.deltaTime;
         }
-    }
-
-    private IEnumerator WaitForAttack() 
-    {
-        _attackScript.Attack();
-        yield return new WaitForSeconds(_attackCooldown);
+        else if (_canAttack && Mathf.Abs(_distanceToPlayer) <= _range) 
+        {
+            _timer = 0;
+            _attackScript.Attack();
+        }
     }
 }

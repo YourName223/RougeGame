@@ -2,60 +2,50 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AttackMeleeEnemy : MonoBehaviour, IAttackEnemy
+public class AttackRangeEnemy : MonoBehaviour, IAttackEnemy
 {
     private bool _hasHit;
     private int _damage;
-    private int _knockbackPower;
-    private float _attackTimer;
-    private float _x;
+    private float _knockbackPower;
     private float _angle;
 
+    private Vector2 _direction;
     private Vector3 _position;
+    private Rigidbody2D _rigidbody;
     private Collider2D _attackCollider;
     private SpriteRenderer _spriteRenderer;
-    private Animator _anim;
-    private Transform _player;
+    private TrailRenderer _trail;
 
     void Start()
     {
+        _trail = GetComponent<TrailRenderer>();
         _hasHit = false;
-        _anim = GetComponent<Animator>();
-        _player = GameObject.FindWithTag("Player").transform;
         _attackCollider = transform.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
+        _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
     }
 
-    public void UpdateVariables(float knockbackPower, int dmg, Vector2 direction, float angle, float attackTimer, Vector3 position) 
+    public void UpdateVariables(float knockbackPower, int dmg, Vector2 direction, float angle, float attackTimer, Vector3 position)
     {
+        _knockbackPower = knockbackPower;
         _damage = dmg;
         _position = position;
-        _x = direction.x;
+        _direction = direction;
         _angle = angle;
-        _attackTimer = attackTimer;
-
-        if (_x < 0)
-        {
-            _spriteRenderer.flipX = true;
-        }
-        else
-        {
-            _spriteRenderer.flipX = false;
-        }
-
-        transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
     }
 
     public void Attack()
     {
+        transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
+        _rigidbody.linearVelocity = _direction.normalized * 3;
+        _spriteRenderer.sortingOrder = 2;
+        _trail.sortingOrder = 2;
         _hasHit = false;
         _attackCollider.enabled = true;
-
-        StartCoroutine(Animate());
     }
 
-    //Checks for collision, if player and havent hit, then hit
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player") && !_hasHit)
@@ -65,22 +55,18 @@ public class AttackMeleeEnemy : MonoBehaviour, IAttackEnemy
 
             if (playerHP != null)
             {
-                playerMov.KnockBack((_player.position - transform.position).normalized, _knockbackPower);
+                playerMov.KnockBack(_direction.normalized, _knockbackPower);
 
                 playerHP.TakeDamage(_damage);
                 _hasHit = true;
             }
         }
-    }
 
-    public IEnumerator Animate()
-    {
-        _anim.Play("PlayerMeleeAnimation");
-
-        yield return new WaitForSeconds(_attackTimer);
-
+        _spriteRenderer.sortingOrder = 0;
+        _trail.sortingOrder = 0;
         _attackCollider.enabled = false;
 
-        _anim.Play("IdleAnimation");
+        _rigidbody.linearVelocity = Vector2.zero;
+        transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
     }
 }

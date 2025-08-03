@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyHealth : MonoBehaviour
+public class HealthEnemy : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
 

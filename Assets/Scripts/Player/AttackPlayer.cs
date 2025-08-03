@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerAttack : MonoBehaviour
+public class AttackPlayer : MonoBehaviour
 {
     [SerializeField] private float attackCooldown;
     [SerializeField] private float attackSpeed;
@@ -15,7 +15,7 @@ public class PlayerAttack : MonoBehaviour
     private Collider2D _attackCollider;
     private GameObject _attackObject;
     private SpriteRenderer _spriteRenderer;
-    private PlayerMovement _playerMovement;
+    private MovementPlayer _playerMovement;
     private Vector2 _direction;
     private Vector3 _mouseWorldPos;
 
@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
         _attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity); //Adds _attackObject to the world
         _attackCollider = _attackObject.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
-        _playerMovement = GetComponent<PlayerMovement>();
+        _playerMovement = GetComponent<MovementPlayer>();
         _originalSpeed = _playerMovement.speed;
         _spriteRenderer = _attackObject.GetComponent<SpriteRenderer>();
     }
@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        PlayerAttackCollision PAC = _attackObject.GetComponent<PlayerAttackCollision>();
+        AttackCollisionPlayer PAC = _attackObject.GetComponent<AttackCollisionPlayer>();
         PAC.damagedEnemies.Clear();
 
         PAC.StartCoroutine(PAC.Animate());

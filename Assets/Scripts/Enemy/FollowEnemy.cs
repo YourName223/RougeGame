@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyFollow : MonoBehaviour
+public class FollowEnemy : MonoBehaviour
 {
     [SerializeField] private float aggroRange;
     [SerializeField] private float range;

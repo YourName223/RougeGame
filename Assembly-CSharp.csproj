@@ -61,25 +61,22 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\OpenChest.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyMeleeAttack.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyHealth.cs" />
-    <Compile Include="Assets\Scripts\Player\playerHealth.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerAttack.cs" />
-    <Compile Include="Assets\Scripts\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyFollow.cs" />
-    <Compile Include="Assets\Scripts\IAttack.cs" />
+    <Compile Include="Assets\Scripts\Events\PauseScreen.cs" />
+    <Compile Include="Assets\Scripts\Events\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Player\HealthPlayer.cs" />
+    <Compile Include="Assets\Scripts\Enemy\AttackRangeEnemy.cs" />
+    <Compile Include="Assets\Scripts\Events\OpenChest.cs" />
+    <Compile Include="Assets\Scripts\Enemy\HealthEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\Events\GameOverScreen.cs" />
+    <Compile Include="Assets\Scripts\Events\CoinPickup.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackMeleeEnemy.cs" />
-    <Compile Include="Assets\Scripts\PauseScreen.cs" />
-    <Compile Include="Assets\Scripts\GameOverScreen.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyMeleeCollision.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyAttackCollision.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerAttackCollision.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyRangedAttack.cs" />
-    <Compile Include="Assets\Scripts\HandleAnimation.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\CoinPickup.cs" />
+    <Compile Include="Assets\Scripts\EnemyAndPlayer\HandleAnimation.cs" />
+    <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
+    <Compile Include="Assets\Scripts\Player\AttackCollisionPlayer.cs" />
+    <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
+    <Compile Include="Assets\Scripts\Enemy\IAttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

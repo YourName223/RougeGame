@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerAttackCollision : MonoBehaviour
+public class AttackCollisionPlayer : MonoBehaviour
 {
     public HashSet<GameObject> damagedEnemies;//List of enemies hit by this attack
 
@@ -26,8 +26,8 @@ public class PlayerAttackCollision : MonoBehaviour
 
         if (other.layer == LayerMask.NameToLayer("Enemy") && !damagedEnemies.Contains(other))
         {
-            EnemyHealth enemyHP = collision.gameObject.GetComponent<EnemyHealth>();
-            EnemyFollow enemyMov = collision.gameObject.GetComponent<EnemyFollow>();
+            HealthEnemy enemyHP = collision.gameObject.GetComponent<HealthEnemy>();
+            FollowEnemy enemyMov = collision.gameObject.GetComponent<FollowEnemy>();
             Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
 
             if (enemyHP != null)

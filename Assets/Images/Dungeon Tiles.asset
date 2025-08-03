@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Wall TIles
+  m_Name: Dungeon Tiles
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -796697524, guid: 0a741761dd7d5504da71b3a2e697a8ec, type: 3}
   m_DefaultGameObject: {fileID: 4897530291188230071, guid: 4f7faa58d5636694f90352f3f9c6f26c, type: 3}
