@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AttackRangeEnemy : MonoBehaviour, IAttackEnemy
+public class AttackRangeEnemy : MonoBehaviour, IAttack
 {
     private bool _hasHit;
     private int _damage;

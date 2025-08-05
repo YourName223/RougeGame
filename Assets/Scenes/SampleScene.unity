@@ -4250,9 +4250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc3c6229261572458aff6627c89134f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0.5
-  attackSpeed: 0.4
-  attackPrefab: {fileID: 2126270580377663238, guid: 6827479825b02d144b2c0927da1aebaa, type: 3}
+  _attackPrefab: {fileID: 2126270580377663238, guid: 6827479825b02d144b2c0927da1aebaa, type: 3}
+  _dmg: 1
+  _attackCooldown: 2
+  _attackTimer: 0.5
+  _range: 1
+  _knockbackPower: 4
 --- !u!114 &1308540315
 MonoBehaviour:
   m_ObjectHideFlags: 0

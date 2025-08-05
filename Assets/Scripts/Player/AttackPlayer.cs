@@ -3,87 +3,49 @@ using System.Collections;
 
 public class AttackPlayer : MonoBehaviour
 {
-    [SerializeField] private float attackCooldown;
-    [SerializeField] private float attackSpeed;
+    [SerializeField] private GameObject _attackPrefab;
+    [SerializeField] private int _dmg;
+    [SerializeField] private float _attackCooldown;
+    [SerializeField] private float _attackTimer;
+    [SerializeField] private float _range;
+    [SerializeField] private float _knockbackPower;
 
-    public GameObject attackPrefab;
-
+    private float _timer;
     private bool _canAttack;
-    private float _originalSpeed;
     private float _angle;
 
+    private IAttack _attackScript;
     private Collider2D _attackCollider;
     private GameObject _attackObject;
-    private SpriteRenderer _spriteRenderer;
-    private MovementPlayer _playerMovement;
     private Vector2 _direction;
     private Vector3 _mouseWorldPos;
 
     void Start()
     {
         _canAttack = true;
-        _attackObject = Instantiate(attackPrefab, transform.position, Quaternion.identity); //Adds _attackObject to the world
+        _attackObject = Instantiate(_attackPrefab, transform.position, Quaternion.identity); //Adds _attackObject to the world
         _attackCollider = _attackObject.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
-        _playerMovement = GetComponent<MovementPlayer>();
-        _originalSpeed = _playerMovement.speed;
-        _spriteRenderer = _attackObject.GetComponent<SpriteRenderer>();
+        _attackScript = _attackObject.GetComponent<IAttack>();
     }
 
     void Update()
-    {
-        RotateAttackObject();
-
-        if (Input.GetMouseButtonDown(0) && _canAttack)
-        {
-            StartCoroutine(Attack());
-        }
-    }
-
-    private void RotateAttackObject() 
     {
         _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         _direction = _mouseWorldPos - transform.position;
         _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
 
-        if (_direction.x < 0)
+        _attackScript.UpdateVariables(_knockbackPower, _dmg, _direction, _angle, _attackTimer, transform.position);
+
+        if (_timer <= _attackCooldown)
         {
-            _spriteRenderer.flipX = true;
-            _angle -= 180;
+            _timer += Time.deltaTime;
         }
-        else
+        else if (_canAttack && Input.GetMouseButtonDown(0))
         {
-            _spriteRenderer.flipX = false;
+            _timer = 0;
+            _attackScript.Attack();
         }
-
-        _attackObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0f, 0f, _angle));
-    }
-
-    private IEnumerator Attack()
-    {
-        AttackCollisionPlayer PAC = _attackObject.GetComponent<AttackCollisionPlayer>();
-        PAC.damagedEnemies.Clear();
-
-        PAC.StartCoroutine(PAC.Animate());
-
-        _attackCollider.enabled = true;
-
-        _playerMovement.speed = _originalSpeed / 2f;
-
-        _canAttack = false;
-        
-        yield return new WaitForSeconds(attackSpeed / 3);
-
-        //Pushes player if standing still and attacking
-        _playerMovement.MeleeKnockback(_direction, 1.7f);
-
-        yield return new WaitForSeconds(attackSpeed / 1.5f);
-        
-        _playerMovement.speed = _originalSpeed;
-
-        yield return new WaitForSeconds(attackCooldown);
-        _canAttack = true;
-        _attackCollider.enabled = false;
     }
 }

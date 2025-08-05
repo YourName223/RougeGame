@@ -9,7 +9,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{B6E8AFF9-199C-42EF-EC2B-39EDAD3C3570}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -75,7 +76,7 @@
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackCollisionPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
-    <Compile Include="Assets\Scripts\Enemy\IAttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\IAttack.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
   </ItemGroup>
   <ItemGroup>

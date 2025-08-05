@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class AttackMeleeEnemy : MonoBehaviour, IAttackEnemy
+public class AttackMeleeEnemy : MonoBehaviour, IAttack
 {
     private bool _hasHit;
     private int _damage;

@@ -15,7 +15,7 @@ public class AttackEnemy : MonoBehaviour
     private float _angle;
     private float _distanceToPlayer;
 
-    private IAttackEnemy _attackScript;
+    private IAttack _attackScript;
     private Transform _player;
     private Vector2 _direction;
 
@@ -24,7 +24,7 @@ public class AttackEnemy : MonoBehaviour
         _timer = _attackCooldown;
         _attackPrefab = Instantiate(_attackPrefab, transform.position, Quaternion.identity);
         _player = GameObject.FindWithTag("Player").transform;
-        _attackScript = _attackPrefab.GetComponent<IAttackEnemy>();
+        _attackScript = _attackPrefab.GetComponent<IAttack>();
     }
 
     void Update()
