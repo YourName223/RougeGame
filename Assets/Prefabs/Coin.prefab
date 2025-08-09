@@ -137,3 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5656567b2c642b4888722df7ca679d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 2368054386213636230, guid: c4c4d9ebf341f9740977348dbe7ed476, type: 3}
+  id: 0
+  itemsToPickup:
+  - {fileID: 11400000, guid: 742377766ba008840be7060a8f4d23cf, type: 2}

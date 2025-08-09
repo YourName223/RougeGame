@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Events\OpenChest.cs" />
     <Compile Include="Assets\Scripts\Enemy\HealthEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\IAttack.cs" />
+    <Compile Include="Assets\Scripts\Events\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Events\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\GameOverScreen.cs" />
     <Compile Include="Assets\Scripts\Events\CoinPickup.cs" />
@@ -76,7 +78,9 @@
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackCollisionPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
+    <Compile Include="Assets\Scripts\Events\Item.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
+    <Compile Include="Assets\Scripts\Events\InventoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
