@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddc9a3a0fd38ec8438e780a0d6998827, type: 3}
-  m_Name: Iron Helmet
+  m_Name: Clover Hat
   m_EditorClassIdentifier: 
   type: 0
   Tile: {fileID: 0}
   range: {x: 5, y: 4}
-  image: {fileID: 2014078603, guid: 3c505729ab32a5b4ab4e19ccb3f56229, type: 3}
+  image: {fileID: -1029028311, guid: 3c505729ab32a5b4ab4e19ccb3f56229, type: 3}

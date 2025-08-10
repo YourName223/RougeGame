@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Events\CoinPickup.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackMeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\EnemyAndPlayer\HandleAnimation.cs" />
+    <Compile Include="Assets\Scripts\Player\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackCollisionPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
