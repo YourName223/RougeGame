@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 public enum State
 {
@@ -48,7 +49,7 @@ public class HandleAnimation : MonoBehaviour
         _stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
 
         //Checks if entity is hurting or rolling
-        if ((_stateInfo.IsName("HurtAnimation") || _stateInfo.IsName("RollingAnimation")) && _stateInfo.normalizedTime < 1)
+        if (_stateInfo.IsName("HurtAnimation") && _stateInfo.normalizedTime < 1f)
         {
             return;
         }

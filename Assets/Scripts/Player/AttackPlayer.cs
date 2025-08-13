@@ -9,10 +9,12 @@ public class AttackPlayer : MonoBehaviour
     [SerializeField] private float _attackTimer;
     [SerializeField] private float _range;
     [SerializeField] private float _knockbackPower;
+    private MovementPlayer _movementPlayer;
 
     private float _timer;
     private bool _canAttack;
     private float _angle;
+
 
     private IAttack _attackScript;
     private Collider2D _attackCollider;
@@ -20,8 +22,10 @@ public class AttackPlayer : MonoBehaviour
     private Vector2 _direction;
     private Vector3 _mouseWorldPos;
 
+
     void Start()
     {
+        _movementPlayer = GetComponent<MovementPlayer>();
         _canAttack = true;
         _attackObject = Instantiate(_attackPrefab, transform.position, Quaternion.identity); //Adds _attackObject to the world
         _attackCollider = _attackObject.GetComponent<Collider2D>();
@@ -45,6 +49,8 @@ public class AttackPlayer : MonoBehaviour
         else if (_canAttack && Input.GetMouseButtonDown(0))
         {
             _timer = 0;
+
+            _movementPlayer.MeleeKnockback(_direction, 1.7f);
             _attackScript.Attack();
         }
     }

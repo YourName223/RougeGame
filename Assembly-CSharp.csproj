@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Events\PauseScreen.cs" />
     <Compile Include="Assets\Scripts\Events\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Player\HealthPlayer.cs" />
+    <Compile Include="Assets\Scripts\Player\AttackMeleePlayer.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackRangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\OpenChest.cs" />
     <Compile Include="Assets\Scripts\Enemy\HealthEnemy.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="Assets\Scripts\EnemyAndPlayer\HandleAnimation.cs" />
     <Compile Include="Assets\Scripts\Player\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
-    <Compile Include="Assets\Scripts\Player\AttackCollisionPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
     <Compile Include="Assets\Scripts\Events\Item.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FollowEnemy : MonoBehaviour
 {
+    [SerializeField] private float acceleration;
     [SerializeField] private float aggroRange;
     [SerializeField] private float range;
     [SerializeField] private float speed;
@@ -13,6 +14,7 @@ public class FollowEnemy : MonoBehaviour
     private Transform _target;
     private Rigidbody2D _rb;
     private HandleAnimation _animationHandler;
+    private Vector2 _lastDirection;
     private Vector2 _knockBack;
 
     void Start()
@@ -59,7 +61,30 @@ public class FollowEnemy : MonoBehaviour
         }
 
         _animationHandler.x = _direction.x;
-        _rb.linearVelocity = _knockBack + _direction * speed;
+
+        if (_direction == Vector2.zero)
+        {
+            if (_rb.linearVelocity.magnitude > 0.75f)
+            {
+                _rb.linearVelocity -= _lastDirection * acceleration;
+            }
+            else
+            {
+                _rb.linearVelocity = Vector2.zero;
+            }
+        }
+        else
+        {
+            if (_rb.linearVelocity.magnitude < (_direction * speed).magnitude)
+            {
+                _rb.linearVelocity += _direction * acceleration;
+            }
+            else
+            {
+                _rb.linearVelocity = _direction * speed + _knockBack;
+            }
+            _lastDirection = _direction;
+        }
     }
     public void KnockBack(Vector2 knockbackDirection, float knockbackSpeed)
     {

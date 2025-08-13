@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5543432674575800351}
   - component: {fileID: 3848825184039600597}
   - component: {fileID: 6108065590505127277}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: PlayerMeleeAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -7434784825441028516, guid: 9dbe7bb5b9aaf174bb24f479b3d4c89d, type: 3}
+  m_Sprite: {fileID: -147794145, guid: b10fbd35dc79a5e4ebe2a892cb89860d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 2}
     newSize: {x: 0.8, y: 0.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -149,8 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1250f4f54fc0e6840a46d89d3d19b991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  knockbackPower: 4
   attackCollider: {fileID: 5213524694472439490}
 --- !u!50 &3848825184039600597
 Rigidbody2D:

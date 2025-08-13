@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class AttackCollisionPlayer : MonoBehaviour, IAttack
+public class AttackMeleePlayer : MonoBehaviour, IAttack
 {
     private int _damage;
     private int _knockbackPower;
@@ -12,21 +12,19 @@ public class AttackCollisionPlayer : MonoBehaviour, IAttack
 
     public HashSet<GameObject> _damagedEnemies;//List of enemies hit by this attack
 
+    private bool _attacking;
     private Vector3 _position;
     private Collider2D _attackCollider;
-    private SpriteRenderer _spriteRenderer;
-    private Animator _anim;
 
     [SerializeField] private Collider2D attackCollider;
 
 
     void Start()
     {
+        _attacking = false;
         _damagedEnemies = new();
-        _anim = GetComponent<Animator>();
         _attackCollider = transform.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
-        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
     }
 
     public void UpdateVariables(float knockbackPower, int dmg, Vector2 direction, float angle, float attackTimer, Vector3 position)
@@ -37,26 +35,33 @@ public class AttackCollisionPlayer : MonoBehaviour, IAttack
         _angle = angle;
         _attackTimer = attackTimer;
 
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Sign(_x) * Mathf.Abs(scale.x);
+        transform.localScale = scale;
         if (_x < 0)
         {
-            _spriteRenderer.flipX = true;
+            _angle -= 160;
         }
         else
         {
-            _spriteRenderer.flipX = false;
+            _angle -= 20;
         }
 
-        transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
+        if (!_attacking)
+        {
+            transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
+        }
     }
 
     public void Attack()
     {
+        _attacking = true;
         _attackCollider.enabled = true;
 
         StartCoroutine(Animate());
     }
 
-    //Checks for collsion, if enemy and havent hit it, deal dmg
+    //Checks for collsion, if its an enemy and havent hit it, deal dmg to it
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject other = collision.gameObject;
@@ -78,14 +83,31 @@ public class AttackCollisionPlayer : MonoBehaviour, IAttack
 
     public IEnumerator Animate()    
     {
-        _anim.Play("PlayerMeleeAnimation");
+        float duration = 0;
+        while (duration < _attackTimer)
+        {
+            duration += Time.deltaTime;
+            if (_x < 0)
+            {
+                transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle + (180 * (duration / _attackTimer))));
+            }
+            else
+            {
+                transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle - (180 * (duration / _attackTimer))));
+            }
 
-        yield return new WaitForSeconds(_attackTimer);
+            yield return null;
+        }
+
+
+        //_anim.Play("PlayerMeleeAnimation");
+
 
         _attackCollider.enabled = false;
 
         _damagedEnemies.Clear();
 
-        _anim.Play("IdleAnimation");
+        _attacking = false;
+        //_anim.Play("IdleAnimation");
     }
 }

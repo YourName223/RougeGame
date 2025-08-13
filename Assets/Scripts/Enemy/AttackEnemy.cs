@@ -7,7 +7,8 @@ public class AttackEnemy : MonoBehaviour
     [SerializeField] private int _dmg;
     [SerializeField] private float _attackCooldown;
     [SerializeField] private float _attackTimer;
-    [SerializeField] private float _range;
+    [SerializeField] private float _maxRange;
+    [SerializeField] private float _minRange;
     [SerializeField] private float _knockbackPower;
 
     private float _timer;
@@ -45,7 +46,7 @@ public class AttackEnemy : MonoBehaviour
         {
             _timer += Time.deltaTime;
         }
-        else if (_canAttack && Mathf.Abs(_distanceToPlayer) <= _range) 
+        else if (_canAttack && Mathf.Abs(_distanceToPlayer) >= _minRange && Mathf.Abs(_distanceToPlayer) <= _maxRange) 
         {
             _timer = 0;
             _attackScript.Attack();
