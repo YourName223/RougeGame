@@ -35,11 +35,6 @@ public class AttackEnemy : MonoBehaviour
         _direction = _player.position - transform.position;
         _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
 
-        if (_direction.x < 0)
-        {
-            _angle -= 180;
-        }
-
         _attackScript.UpdateVariables(_knockbackPower, _dmg, _direction, _angle, _attackTimer, transform.position);
 
         if (_timer <= _attackCooldown)

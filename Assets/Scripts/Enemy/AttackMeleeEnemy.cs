@@ -37,10 +37,12 @@ public class AttackMeleeEnemy : MonoBehaviour, IAttack
 
         if (_x < 0)
         {
+            _angle -= 160;
             _spriteRenderer.flipX = true;
         }
         else
         {
+            _angle -= 20;
             _spriteRenderer.flipX = false;
         }
 

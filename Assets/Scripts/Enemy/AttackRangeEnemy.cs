@@ -38,7 +38,7 @@ public class AttackRangeEnemy : MonoBehaviour, IAttack
     public void Attack()
     {
         transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
-        _rigidbody.linearVelocity = _direction.normalized * 3;
+        _rigidbody.linearVelocity = _direction.normalized * 5;
         _spriteRenderer.sortingOrder = 2;
         _trail.sortingOrder = 2;
         _hasHit = false;
