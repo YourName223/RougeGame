@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class AttackMeleePlayer : MonoBehaviour, IAttack
 {
+    private bool _attacking;
     private int _damage;
     private int _knockbackPower;
     private float _attackTimer;
@@ -12,15 +13,16 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
 
     public HashSet<GameObject> _damagedEnemies;//List of enemies hit by this attack
 
-    private bool _attacking;
     private Vector3 _position;
     private Collider2D _attackCollider;
+    private MovementPlayer _movementPlayer;
 
     [SerializeField] private Collider2D attackCollider;
 
 
     void Start()
     {
+        _movementPlayer = GameObject.Find("Player").GetComponent<MovementPlayer>();
         _attacking = false;
         _damagedEnemies = new();
         _attackCollider = transform.GetComponent<Collider2D>();
@@ -55,9 +57,6 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
 
     public void Attack()
     {
-        _attacking = true;
-        _attackCollider.enabled = true;
-
         StartCoroutine(Animate());
     }
 
@@ -81,8 +80,12 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
         }
     }
 
-    public IEnumerator Animate()    
+    public IEnumerator Animate()
     {
+        _attacking = true;
+        _attackCollider.enabled = true;
+
+        _movementPlayer.attacking = true;
         float duration = 0;
         while (duration < _attackTimer)
         {
@@ -99,15 +102,14 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
             yield return null;
         }
 
-
         //_anim.Play("PlayerMeleeAnimation");
-
 
         _attackCollider.enabled = false;
 
         _damagedEnemies.Clear();
 
         _attacking = false;
+        _movementPlayer.attacking = false;
         //_anim.Play("IdleAnimation");
     }
 }

@@ -11,15 +11,15 @@ public class AttackPlayer : MonoBehaviour
     [SerializeField] private float _knockbackPower;
     private MovementPlayer _movementPlayer;
 
-    private float _timer;
+    private float _attackCooldownTimer;
     private bool _canAttack;
-    private float _angle;
+    private float _attackAngle;
 
 
     private IAttack _attackScript;
     private Collider2D _attackCollider;
     private GameObject _attackObject;
-    private Vector2 _direction;
+    private Vector2 _attackDirection;
     private Vector3 _mouseWorldPos;
 
 
@@ -32,25 +32,23 @@ public class AttackPlayer : MonoBehaviour
         _attackCollider.enabled = false;
         _attackScript = _attackObject.GetComponent<IAttack>();
     }
-
     void Update()
     {
         _mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        _direction = _mouseWorldPos - transform.position;
-        _angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+        _attackDirection = _mouseWorldPos - transform.position;
+        _attackAngle = Mathf.Atan2(_attackDirection.y, _attackDirection.x) * Mathf.Rad2Deg;
 
-        _attackScript.UpdateVariables(_knockbackPower, _dmg, _direction, _angle, _attackTimer, transform.position);
+        _attackScript.UpdateVariables(_knockbackPower, _dmg, _attackDirection, _attackAngle, _attackTimer, transform.position);
 
-        if (_timer <= _attackCooldown)
+        if (_attackCooldownTimer <= _attackCooldown)
         {
-            _timer += Time.deltaTime;
+            _attackCooldownTimer += Time.deltaTime;
         }
-        else if (_canAttack && Input.GetMouseButtonDown(0))
+        else if (_canAttack && Input.GetMouseButtonDown(0) && !_movementPlayer.isRolling)
         {
-            _timer = 0;
-
-            _movementPlayer.MeleeKnockback(_direction, 1.7f);
+            _attackCooldownTimer = 0;
+            _movementPlayer.MeleeKnockback(_attackDirection, 1.7f);
             _attackScript.Attack();
         }
     }

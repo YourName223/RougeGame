@@ -12,10 +12,11 @@ public class MovementPlayer : MonoBehaviour
     [SerializeField] private float rollingCooldown;
     [SerializeField] private PauseScreen PauseScreen;
 
+    [HideInInspector] public bool isRolling;
+    [HideInInspector] public bool attacking;
     [HideInInspector] public Vector2 inputMovement;
 
     private bool _canRoll;
-    private bool isRolling;
 
     private Rigidbody2D _characterBody;
     private HandleAnimation _animationHandler;
@@ -27,6 +28,7 @@ public class MovementPlayer : MonoBehaviour
 
     void Start()
     {
+        attacking = false;
         _finalVelocity = Vector2.zero;
         _canRoll = true;
         isRolling = false;
@@ -72,7 +74,7 @@ public class MovementPlayer : MonoBehaviour
 
         inputMovement.Normalize();
 
-        if (inputMovement.magnitude == 0)
+        if (inputMovement.magnitude == 0 || attacking)
         {
             // Decay player's own velocity separately (only player movement velocity)
             Vector2 playerMovementVelocity = _characterBody.linearVelocity - _knockBack;
