@@ -67,10 +67,9 @@
     <Compile Include="Assets\Scripts\Player\AttackMeleePlayer.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackRangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\OpenChest.cs" />
+    <Compile Include="Assets\Scripts\Events\Inventory\InventorySlot.cs" />
     <Compile Include="Assets\Scripts\Enemy\HealthEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\IAttack.cs" />
-    <Compile Include="Assets\Scripts\Events\InventorySlot.cs" />
-    <Compile Include="Assets\Scripts\Events\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\GameOverScreen.cs" />
     <Compile Include="Assets\Scripts\Events\CoinPickup.cs" />
@@ -78,10 +77,15 @@
     <Compile Include="Assets\Scripts\EnemyAndPlayer\HandleAnimation.cs" />
     <Compile Include="Assets\Scripts\Player\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
+    <Compile Include="Assets\Scripts\Events\MinimapController.cs" />
+    <Compile Include="Assets\Scripts\Events\Inventory\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
+    <Compile Include="Assets\Scripts\Events\Dungeon Generation\TileGeneration.cs" />
+    <Compile Include="Assets\Scripts\Events\Dungeon Generation\RoomManager.cs" />
     <Compile Include="Assets\Scripts\Events\Item.cs" />
+    <Compile Include="Assets\Scripts\Events\Dungeon Generation\TileData.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
-    <Compile Include="Assets\Scripts\Events\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\Events\Inventory\InventoryManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

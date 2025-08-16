@@ -48,7 +48,7 @@ public class MovementPlayer : MonoBehaviour
             PauseScreen.Set(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _canRoll)
+        if (Input.GetKeyDown(KeyCode.Space) && _canRoll)
         {
             isRolling = true;
             StartCoroutine(Roll());
