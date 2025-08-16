@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum RoomType
+{
+    Normal,
+    Boss,
+    Shop,
+    Hidden,
+}
+
 [Serializable]
 public class TileData
 {
@@ -13,4 +21,6 @@ public class TileData
 public class RoomData
 {
     public List<TileData> tiles = new();
+
+    public RoomType roomType = RoomType.Normal; // Default to Normal
 }

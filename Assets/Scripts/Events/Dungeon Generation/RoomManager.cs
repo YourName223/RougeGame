@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance;
+    public Tilemap tilemap;
 
     public Dictionary<Vector2Int, RoomData> savedRooms = new();
 
@@ -16,7 +17,7 @@ public class RoomManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void SaveRoom(Tilemap tilemap, Vector2Int roomPosition)
+    public void SaveRoom(Tilemap tilemap, Vector2Int roomPosition, RoomType roomType)
     {
         RoomData room = new();
         BoundsInt bounds = tilemap.cellBounds;
@@ -35,8 +36,8 @@ public class RoomManager : MonoBehaviour
             }
         }
 
+        room.roomType = roomType;
         savedRooms[roomPosition] = room;
-        Debug.Log($"Room saved at position {roomPosition}. Total rooms: {savedRooms.Count}");
     }
 
     public void LoadRoom(Tilemap tilemap, Vector2Int roomPosition)
@@ -45,7 +46,6 @@ public class RoomManager : MonoBehaviour
 
         if (!savedRooms.ContainsKey(roomPosition))
         {
-            Debug.LogWarning($"No room saved at position {roomPosition}!");
             return;
         }
 
@@ -57,6 +57,44 @@ public class RoomManager : MonoBehaviour
             tilemap.SetTile(pos3D, tileData.tile);
         }
 
-        Debug.Log($"Room loaded at position {roomPosition}.");
+        AssignDoorDirections();
+    }
+    public void AssignDoorDirections()
+    {
+        var doors = FindObjectsByType<Door>(FindObjectsSortMode.None);
+        if (doors.Length == 0) 
+        {
+            Debug.Log("Wat?");
+            return;
+        }
+
+        // Find min and max positions for x and y among all doors
+        float minX = 0;
+        float maxX = 0;
+        float minY = 0;
+        float maxY = 0;
+
+        foreach (var door in doors)
+        {
+            Vector3 pos = door.transform.position;
+            if (pos.x < minX) minX = pos.x;
+            if (pos.x > maxX) maxX = pos.x;
+            if (pos.y < minY) minY = pos.y;
+            if (pos.y > maxY) maxY = pos.y;
+        }
+
+        foreach (var door in doors)
+        {
+            Vector3 pos = door.transform.position;
+
+            if (Mathf.Approximately(pos.x, minX) && minX != 0)
+                door.doorDirection = Door.DoorDirection.Left;
+            else if (Mathf.Approximately(pos.x, maxX) && maxX != 0)
+                door.doorDirection = Door.DoorDirection.Right;
+            else if (Mathf.Approximately(pos.y, minY) && minY != 0)
+                door.doorDirection = Door.DoorDirection.Down;
+            else if (Mathf.Approximately(pos.y, maxY) && maxY != 0)
+                door.doorDirection = Door.DoorDirection.Up;
+        }
     }
 }
