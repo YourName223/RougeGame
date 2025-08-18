@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5313854272120765566}
   - component: {fileID: 3037666764001884167}
   m_Layer: 0
-  m_Name: Door
+  m_Name: DoorUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3122ed39a7f5c441831e1e80907c8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorDirection: 3
+  doorDirection: 0
 --- !u!61 &3037666764001884167
 BoxCollider2D:
   m_ObjectHideFlags: 0

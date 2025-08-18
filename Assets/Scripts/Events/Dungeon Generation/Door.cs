@@ -33,7 +33,7 @@ public class Door : MonoBehaviour
             TileGeneration.loadRoomY += moveDir.y;
 
             Transform _player = GameObject.FindWithTag("Player").transform;
-            _player.position = new Vector3(1.5f, 1.5f, 0);
+            _player.position = new Vector3(0.5f, 0.5f, 0);
 
             TileGeneration.currentRoomPos = new(TileGeneration.loadRoomX, TileGeneration.loadRoomY);
             RoomManager.Instance.LoadRoom(TileGeneration.tilemap, TileGeneration.currentRoomPos);
@@ -46,7 +46,7 @@ public class Door : MonoBehaviour
         {
             DoorDirection.Up => new Vector2Int(-1, 0),
             DoorDirection.Down => new Vector2Int(1, 0),
-            DoorDirection.Left => new Vector2Int(0, 1),
+            DoorDirection.Left => new Vector2Int(0, -1),
             DoorDirection.Right => new Vector2Int(0, 1),
             _ => Vector2Int.zero
         };

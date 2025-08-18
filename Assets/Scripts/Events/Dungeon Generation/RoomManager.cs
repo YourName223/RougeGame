@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -44,6 +45,7 @@ public class RoomManager : MonoBehaviour
     {
         tilemap.ClearAllTiles();
 
+
         if (!savedRooms.ContainsKey(roomPosition))
         {
             return;
@@ -55,46 +57,6 @@ public class RoomManager : MonoBehaviour
         {
             Vector3Int pos3D = new(tileData.position.x, tileData.position.y, 0);
             tilemap.SetTile(pos3D, tileData.tile);
-        }
-
-        AssignDoorDirections();
-    }
-    public void AssignDoorDirections()
-    {
-        var doors = FindObjectsByType<Door>(FindObjectsSortMode.None);
-        if (doors.Length == 0) 
-        {
-            Debug.Log("Wat?");
-            return;
-        }
-
-        // Find min and max positions for x and y among all doors
-        float minX = 0;
-        float maxX = 0;
-        float minY = 0;
-        float maxY = 0;
-
-        foreach (var door in doors)
-        {
-            Vector3 pos = door.transform.position;
-            if (pos.x < minX) minX = pos.x;
-            if (pos.x > maxX) maxX = pos.x;
-            if (pos.y < minY) minY = pos.y;
-            if (pos.y > maxY) maxY = pos.y;
-        }
-
-        foreach (var door in doors)
-        {
-            Vector3 pos = door.transform.position;
-
-            if (Mathf.Approximately(pos.x, minX) && minX != 0)
-                door.doorDirection = Door.DoorDirection.Left;
-            else if (Mathf.Approximately(pos.x, maxX) && maxX != 0)
-                door.doorDirection = Door.DoorDirection.Right;
-            else if (Mathf.Approximately(pos.y, minY) && minY != 0)
-                door.doorDirection = Door.DoorDirection.Down;
-            else if (Mathf.Approximately(pos.y, maxY) && maxY != 0)
-                door.doorDirection = Door.DoorDirection.Up;
         }
     }
 }

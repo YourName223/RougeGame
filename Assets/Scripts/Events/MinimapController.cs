@@ -1,30 +1,35 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniMapController : MonoBehaviour
 {
-    public GameObject minimapCellPrefab; // The prefab for each cell (UI Image)
-    public Transform minimapGridParent;  // The panel with GridLayoutGroup component
+    public GameObject minimapCellPrefab;
+    public Transform minimapGridParent;
     public int mapWidth;
     public int mapHeight;
-    private Vector2Int previousRoomPos;
-    private Dictionary<Vector2Int, Image> roomCells = new();
-    private Vector2Int currentRoomPos;
     public Sprite normal;
     public Sprite boss;
     public Sprite shop;
     public Sprite hidden;
     public Sprite current;
-    private Sprite sprite;
+
+    private Vector2Int _previousRoomPos;
+    private Dictionary<Vector2Int, Image> _roomCells;
+    private Vector2Int _currentRoomPos;
+    private Sprite _sprite;
 
     void Start()
     {
-        Vector2Int currentRoomPos = new Vector2Int(0,0);
-        previousRoomPos = new Vector2Int(-1, -1);
+        _roomCells = new();
+        _currentRoomPos = new(0,0);
+        _previousRoomPos = new Vector2Int(-1, -1);
         mapWidth = 5;
         mapHeight = 5;
+
         // Generate the minimap grid cells
         for (int x = 0; x < mapWidth; x++)
         {
@@ -34,13 +39,12 @@ public class MiniMapController : MonoBehaviour
                 Image cellImage = cellGO.GetComponent<Image>();
 
                 Vector2Int roomPos = new(x, y);
-                roomCells.Add(roomPos, cellImage);
+                _roomCells.Add(roomPos, cellImage);
             }
         }
-        UpdateRooms(currentRoomPos);
     }
 
-    // Call this whenever player changes rooms
+    //Updates the minimap
     public void UpdateRooms(Vector2Int newRoomPos)
     {
         DrawLastRoom();
@@ -49,30 +53,27 @@ public class MiniMapController : MonoBehaviour
 
         DrawNearbyRooms();
 
-        previousRoomPos = currentRoomPos;
+        _previousRoomPos = _currentRoomPos;
     }
     private void DrawLastRoom() 
     {
-        if (previousRoomPos.x >= 0 && previousRoomPos.y >= 0)
+        if (_previousRoomPos.x >= 0 && _previousRoomPos.y >= 0)
         {
-            if (roomCells.TryGetValue(previousRoomPos, out Image oldCell))
+            if (_roomCells.TryGetValue(_previousRoomPos, out Image oldCell))
             {
-                GetRoomVisuals(previousRoomPos, out sprite);
-                oldCell.sprite = sprite;
+                GetRoomVisuals(_previousRoomPos, out _sprite);
+                oldCell.sprite = _sprite;
                 oldCell.color = Color.white;
             }
         }
     }
     private void DrawCurrentRoom(Vector2Int newRoomPos)
     {
-        currentRoomPos = newRoomPos;
-        if (roomCells.TryGetValue(currentRoomPos, out var newCell))
+        _currentRoomPos = newRoomPos;
+        if (_roomCells.TryGetValue(_currentRoomPos, out var newCell))
         {
-            if (roomCells.TryGetValue(currentRoomPos, out Image oldCell))
-            {
-                newCell.sprite = current;
-                newCell.color = Color.white;
-            }
+            newCell.sprite = current;
+            newCell.color = Color.white;
         }
     }
     private void DrawNearbyRooms() 
@@ -80,16 +81,16 @@ public class MiniMapController : MonoBehaviour
         // Define the 4 neighbors (up, down, left, right)
         Vector2Int[] neighbors = new Vector2Int[]
         {
-        new(currentRoomPos.x + 1, currentRoomPos.y),
-        new(currentRoomPos.x - 1, currentRoomPos.y),
-        new(currentRoomPos.x, currentRoomPos.y + 1),
-        new(currentRoomPos.x, currentRoomPos.y - 1),
+        new(_currentRoomPos.x + 1, _currentRoomPos.y),
+        new(_currentRoomPos.x - 1, _currentRoomPos.y),
+        new(_currentRoomPos.x, _currentRoomPos.y + 1),
+        new(_currentRoomPos.x, _currentRoomPos.y - 1),
         };
 
         foreach (var neighborPos in neighbors)
         {
             //Checks if cell is a nearby cell
-            if (!roomCells.TryGetValue(neighborPos, out var neighborCell))
+            if (!_roomCells.TryGetValue(neighborPos, out var neighborCell))
             {
                 continue;
             }
@@ -99,10 +100,11 @@ public class MiniMapController : MonoBehaviour
                 continue;
             }
             //Find the room type and draws that sprite on the room
-            GetRoomVisuals(neighborPos, out sprite);
-            if (sprite != hidden)
+            GetRoomVisuals(neighborPos, out _sprite);
+
+            if (_sprite != hidden)
             {
-                neighborCell.sprite = sprite;
+                neighborCell.sprite = _sprite;
                 neighborCell.color = new Color(1f, 1f, 1f, 0.5f); // white with 50% alpha
             }
         }

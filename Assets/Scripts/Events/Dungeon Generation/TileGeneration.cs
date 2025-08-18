@@ -6,12 +6,12 @@ public class TileGeneration : MonoBehaviour
     public MiniMapController miniMap;
     public Tilemap tilemap;
     public TileBase tileToPlace;
-    public Vector2Int currentRoomPos;
-    private int width;
-    private int height;
     public int loadRoomX;
     public int loadRoomY;
-    private Vector3Int pos3D;
+    public Vector2Int currentRoomPos;
+    private int _width;
+    private int _height;
+    private Vector3Int _pos3D;
 
     void Start()
     {
@@ -22,10 +22,10 @@ public class TileGeneration : MonoBehaviour
         {
             for (int y = 0; y < 5; y++)
             {
-                width = Random.Range(3, 8);
-                height = Random.Range(3, 8);
-                RoomGeneration();
                 currentRoomPos = new(x, y);
+                _width = Random.Range(3, 8);
+                _height = Random.Range(3, 8);
+                RoomGeneration();
 
                 RoomType roomType = RoomType.Normal;
 
@@ -80,21 +80,33 @@ public class TileGeneration : MonoBehaviour
 
     public void RoomGeneration()
     {
-        for (int x = -width / 2; x < Mathf.RoundToInt(width / 2) + 3; x++)
+        for (int x = -_width / 2 - 1; x < _width / 2 + (_width % 2) + 1; x++)
         {
-            for (int y = -height / 2; y < Mathf.RoundToInt(height / 2) + 5; y++)
+            for (int y = -_height / 2 - 2; y < _height / 2 + (_height % 2) + 2; y++)
             {
-                pos3D = new(x, y, 0);
-                tilemap.SetTile(pos3D, tileToPlace);
-                if (x == 1 && y == Mathf.RoundToInt(height / 2) + 4)
+                _pos3D = new(x, y, 0);
+                tilemap.SetTile(_pos3D, tileToPlace);
+
+                //Places a tile outside of the room which will at a door
+                if (x == 0 && y == _height / 2 + (_height % 2) + 1)
                 {
-                    pos3D = new(x, y + 1, 0);
-                    tilemap.SetTile(pos3D, tileToPlace);
+                    _pos3D = new(x, y + 1, 0);
+                    tilemap.SetTile(_pos3D, tileToPlace);
                 }
-                if (x == 1 && y == -height / 2)
+                else if (x == 0 && y == -_height / 2 - 2)
                 {
-                    pos3D = new(x, y - 1, 0);
-                    tilemap.SetTile(pos3D, tileToPlace);
+                    _pos3D = new(x, y - 1, 0);
+                    tilemap.SetTile(_pos3D, tileToPlace);
+                }
+                else if (x == _width / 2 + (_width % 2)&& y == 0)
+                {
+                    _pos3D = new(x + 1, y, 0);
+                    tilemap.SetTile(_pos3D, tileToPlace);
+                }
+                else if (x == -_width / 2 - 1 && y == 0)
+                {
+                    _pos3D = new(x - 1, y, 0);
+                    tilemap.SetTile(_pos3D, tileToPlace);
                 }
             }
         }
