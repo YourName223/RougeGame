@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7082781710064260703}
   - component: {fileID: 1110567027820911688}
   - component: {fileID: 5923589966510888135}
+  - component: {fileID: -8432530796299412300}
   m_Layer: 5
   m_Name: Minimap Cell
   m_TagString: Untagged
@@ -58,14 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 14966177, guid: 4e8e8d7cd6e877f43918a3e5502c58c8, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75,3 +76,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-8432530796299412300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053106047177550773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4702729240f3815419a94be6363948a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

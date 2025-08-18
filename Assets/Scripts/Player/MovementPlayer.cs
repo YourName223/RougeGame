@@ -38,14 +38,18 @@ public class MovementPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            PauseScreen.gameObject.SetActive(true);
-            PauseScreen.Set(true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseScreen.Set(false);
+            if (PauseScreen.active == true)
+            {
+                PauseScreen.Set();
+                PauseScreen.active = false;
+            }
+            else
+            {
+                PauseScreen.Set();
+                PauseScreen.active = true;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _canRoll)

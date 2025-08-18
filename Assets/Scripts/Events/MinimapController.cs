@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class MiniMapController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class MiniMapController : MonoBehaviour
     public Sprite shop;
     public Sprite hidden;
     public Sprite current;
+    private TileGeneration TileGeneration;
 
     private Vector2Int _previousRoomPos;
     private Dictionary<Vector2Int, Image> _roomCells;
@@ -24,6 +26,7 @@ public class MiniMapController : MonoBehaviour
 
     void Start()
     {
+        TileGeneration = FindFirstObjectByType<TileGeneration>();
         _roomCells = new();
         _currentRoomPos = new(0,0);
         _previousRoomPos = new Vector2Int(-1, -1);
@@ -39,7 +42,13 @@ public class MiniMapController : MonoBehaviour
                 Image cellImage = cellGO.GetComponent<Image>();
 
                 Vector2Int roomPos = new(x, y);
-                _roomCells.Add(roomPos, cellImage);
+                _roomCells.Add(roomPos, cellImage); 
+
+                MiniMapTeleport teleportScript = cellGO.GetComponent<MiniMapTeleport>();
+                if (teleportScript != null)
+                {
+                    teleportScript.roomCoordinates = roomPos;
+                }
             }
         }
     }
@@ -109,6 +118,37 @@ public class MiniMapController : MonoBehaviour
             }
         }
     }
+
+    public void ClearRooms() 
+    {
+        int childIndex = 0;
+        _currentRoomPos = new(0, 0);
+        _previousRoomPos = new Vector2Int(-1, -1);
+        mapWidth = 5;
+        mapHeight = 5;
+
+        // Generate the minimap grid cells
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Transform child = minimapGridParent.GetChild(childIndex);
+                Image cellImage = child.GetComponent<Image>();
+
+                // Clear the image sprite here:
+                cellImage.sprite = null;
+
+                Color color = cellImage.color;
+                color.a = 0f;  // Make fully transparent
+                cellImage.color = color;
+
+                Vector2Int roomPos = new Vector2Int(x, y);
+                _roomCells[roomPos] = cellImage;
+
+                childIndex++;
+            }
+        }
+    }
     private void GetRoomVisuals(Vector2Int roomPos, out Sprite sprite)
     {
         sprite = normal;
@@ -134,5 +174,17 @@ public class MiniMapController : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void TeleportToRoom(Vector2Int roomCoordinates)
+    {
+        Transform _player = GameObject.FindWithTag("Player").transform;
+        _player.position = new Vector3(0.5f, 0.5f, 0);
+
+        TileGeneration.loadRoomX = roomCoordinates.x;
+        TileGeneration.loadRoomY = roomCoordinates.y;
+        TileGeneration.currentRoomPos = new(TileGeneration.loadRoomX, TileGeneration.loadRoomY);
+        RoomManager.Instance.LoadRoom(TileGeneration.tilemap, TileGeneration.currentRoomPos);
+        UpdateRooms(roomCoordinates);
     }
 }

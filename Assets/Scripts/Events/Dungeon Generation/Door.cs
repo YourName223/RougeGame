@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
 
     void Start()
     {
-        TileGeneration = FindObjectOfType<TileGeneration>();
+        TileGeneration = FindFirstObjectByType<TileGeneration>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

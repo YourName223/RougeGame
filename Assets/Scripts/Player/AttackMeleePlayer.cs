@@ -6,7 +6,7 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
 {
     private bool _attacking;
     private int _damage;
-    private int _knockbackPower;
+    private float _knockbackPower;
     private float _attackTimer;
     private float _x;
     private float _angle;
@@ -31,6 +31,7 @@ public class AttackMeleePlayer : MonoBehaviour, IAttack
 
     public void UpdateVariables(float knockbackPower, int dmg, Vector2 direction, float angle, float attackTimer, Vector3 position)
     {
+        _knockbackPower = knockbackPower;
         _damage = dmg;
         _position = position;
         _x = direction.x;

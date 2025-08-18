@@ -41,10 +41,14 @@ public class RoomManager : MonoBehaviour
         savedRooms[roomPosition] = room;
     }
 
+    public void ClearSavedRooms() 
+    { 
+        savedRooms.Clear();
+    }
+
     public void LoadRoom(Tilemap tilemap, Vector2Int roomPosition)
     {
         tilemap.ClearAllTiles();
-
 
         if (!savedRooms.ContainsKey(roomPosition))
         {
