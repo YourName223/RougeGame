@@ -1,32 +1,28 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class MiniMapController : MonoBehaviour
 {
+    public Vector2Int _currentRoomPos;
     public GameObject minimapCellPrefab;
     public Transform minimapGridParent;
     public int mapWidth;
     public int mapHeight;
-    public Sprite normal;
-    public Sprite boss;
-    public Sprite shop;
-    public Sprite hidden;
-    public Sprite current;
-    private TileGeneration TileGeneration;
+
+    [SerializeField] private Sprite normal;
+    [SerializeField] private Sprite boss;
+    [SerializeField] private Sprite shop;
+    [SerializeField] private Sprite hidden;
+    [SerializeField] private Sprite current;
+    [SerializeField] private TileGeneration _TileGeneration;
 
     private Vector2Int _previousRoomPos;
     private Dictionary<Vector2Int, Image> _roomCells;
-    private Vector2Int _currentRoomPos;
     private Sprite _sprite;
 
     void Start()
     {
-        TileGeneration = FindFirstObjectByType<TileGeneration>();
         _roomCells = new();
         _currentRoomPos = new(0,0);
         _previousRoomPos = new Vector2Int(-1, -1);
@@ -49,6 +45,7 @@ public class MiniMapController : MonoBehaviour
                 {
                     teleportScript.roomCoordinates = roomPos;
                 }
+                teleportScript.SetMinimapController(this);
             }
         }
     }
@@ -71,6 +68,7 @@ public class MiniMapController : MonoBehaviour
             if (_roomCells.TryGetValue(_previousRoomPos, out Image oldCell))
             {
                 GetRoomVisuals(_previousRoomPos, out _sprite);
+                RoomManager.Instance.savedRooms[_previousRoomPos].cleared = true;
                 oldCell.sprite = _sprite;
                 oldCell.color = Color.white;
             }
@@ -110,7 +108,6 @@ public class MiniMapController : MonoBehaviour
             }
             //Find the room type and draws that sprite on the room
             GetRoomVisuals(neighborPos, out _sprite);
-
             if (_sprite != hidden)
             {
                 neighborCell.sprite = _sprite;
@@ -142,13 +139,14 @@ public class MiniMapController : MonoBehaviour
                 color.a = 0f;  // Make fully transparent
                 cellImage.color = color;
 
-                Vector2Int roomPos = new Vector2Int(x, y);
+                Vector2Int roomPos = new(x, y);
                 _roomCells[roomPos] = cellImage;
 
                 childIndex++;
             }
         }
     }
+
     private void GetRoomVisuals(Vector2Int roomPos, out Sprite sprite)
     {
         sprite = normal;
@@ -181,10 +179,10 @@ public class MiniMapController : MonoBehaviour
         Transform _player = GameObject.FindWithTag("Player").transform;
         _player.position = new Vector3(0.5f, 0.5f, 0);
 
-        TileGeneration.loadRoomX = roomCoordinates.x;
-        TileGeneration.loadRoomY = roomCoordinates.y;
-        TileGeneration.currentRoomPos = new(TileGeneration.loadRoomX, TileGeneration.loadRoomY);
-        RoomManager.Instance.LoadRoom(TileGeneration.tilemap, TileGeneration.currentRoomPos);
+        _TileGeneration.loadRoomX = roomCoordinates.x;
+        _TileGeneration.loadRoomY = roomCoordinates.y;
+        _TileGeneration.currentRoomPos = new(_TileGeneration.loadRoomX, _TileGeneration.loadRoomY);
+        RoomManager.Instance.LoadRoom(_TileGeneration.tilemap, _TileGeneration.currentRoomPos);
         UpdateRooms(roomCoordinates);
     }
 }

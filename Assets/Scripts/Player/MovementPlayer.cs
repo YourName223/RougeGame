@@ -10,11 +10,15 @@ public class MovementPlayer : MonoBehaviour
     [SerializeField] private float rollingPower;
     [SerializeField] private float rollingTime;
     [SerializeField] private float rollingCooldown;
-    [SerializeField] private PauseScreen PauseScreen;
 
     [HideInInspector] public bool isRolling;
     [HideInInspector] public bool attacking;
     [HideInInspector] public Vector2 inputMovement;
+
+
+    [SerializeField] private InventoryScreen inventory;
+    [SerializeField] private PauseScreen pauseScreen;
+
 
     private bool _canRoll;
 
@@ -40,15 +44,15 @@ public class MovementPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (PauseScreen.active == true)
+            if (pauseScreen.active == true)
             {
-                PauseScreen.Set();
-                PauseScreen.active = false;
+                inventory.Set();
+                pauseScreen.Set();
             }
             else
             {
-                PauseScreen.Set();
-                PauseScreen.active = true;
+                inventory.Set(); 
+                pauseScreen.Set();
             }
         }
 

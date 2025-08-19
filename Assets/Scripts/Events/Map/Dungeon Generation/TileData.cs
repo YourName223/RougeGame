@@ -20,6 +20,8 @@ public class TileData
 
 public class RoomData
 {
+    public bool cleared = false;
+
     public List<TileData> tiles = new();
 
     public RoomType roomType = RoomType.Normal; // Default to Normal

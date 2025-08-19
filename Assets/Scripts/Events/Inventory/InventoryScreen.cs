@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PauseScreen : MonoBehaviour
+public class InventoryScreen : MonoBehaviour
 {
     public bool active;
 

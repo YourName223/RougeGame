@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(menuName = "Tiles/Custom Rule Tile")]
 public class CustomRuleTile : RuleTile
@@ -17,7 +16,7 @@ public class CustomRuleTile : RuleTile
             var sr = instantiatedGameObject.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
-                UnityEngine.Tilemaps.TileData tileData = new UnityEngine.Tilemaps.TileData();
+                UnityEngine.Tilemaps.TileData tileData = new();
                 GetTileData(position, tilemap, ref tileData);
                 sr.sprite = tileData.sprite;
 

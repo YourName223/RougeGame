@@ -63,33 +63,35 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Events\PauseScreen.cs" />
     <Compile Include="Assets\Scripts\Events\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Mini Map\MiniMapTeleport.cs" />
     <Compile Include="Assets\Scripts\Player\HealthPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\AttackMeleePlayer.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackRangeEnemy.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\CustomRuleTile.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Mini Map\MinimapScreen.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\TileGeneration.cs" />
     <Compile Include="Assets\Scripts\Events\OpenChest.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\MiniMapTeleport.cs" />
     <Compile Include="Assets\Scripts\Events\Inventory\InventorySlot.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\MinimapScreen.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\TileData.cs" />
     <Compile Include="Assets\Scripts\Enemy\HealthEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemy\IAttack.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\Door.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackEnemy.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Mini Map\MinimapController.cs" />
     <Compile Include="Assets\Scripts\Events\GameOverScreen.cs" />
     <Compile Include="Assets\Scripts\Events\CoinPickup.cs" />
     <Compile Include="Assets\Scripts\Enemy\AttackMeleeEnemy.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\CustomRuleTile.cs" />
     <Compile Include="Assets\Scripts\EnemyAndPlayer\HandleAnimation.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\RoomManager.cs" />
     <Compile Include="Assets\Scripts\Player\StatsPlayer.cs" />
     <Compile Include="Assets\Scripts\Player\MovementPlayer.cs" />
-    <Compile Include="Assets\Scripts\Events\MinimapController.cs" />
+    <Compile Include="Assets\Scripts\Events\Inventory\SetInventory.cs" />
     <Compile Include="Assets\Scripts\Events\Inventory\InventoryItem.cs" />
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\TileGeneration.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\RoomManager.cs" />
+    <Compile Include="Assets\Scripts\Events\Inventory\InventoryScreen.cs" />
     <Compile Include="Assets\Scripts\Events\Item.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\TileData.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\Inventory\InventoryManager.cs" />
-    <Compile Include="Assets\Scripts\Events\Dungeon Generation\Door.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

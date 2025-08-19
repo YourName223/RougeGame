@@ -228,6 +228,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Minimap Icons_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08d396e361e32ee42a8ec774341e9ad9
+      internalID: -223111345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -249,6 +271,7 @@ TextureImporter:
       Minimap Icons_2: 1357030320
       Minimap Icons_3: 14966177
       Minimap Icons_4: -2137893369
+      Minimap Icons_5: -223111345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
