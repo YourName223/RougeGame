@@ -14,6 +14,7 @@ public class CustomRuleTile : RuleTile
         if (instantiatedGameObject != null)
         {
             var sr = instantiatedGameObject.GetComponent<SpriteRenderer>();
+
             if (sr != null)
             {
                 UnityEngine.Tilemaps.TileData tileData = new();

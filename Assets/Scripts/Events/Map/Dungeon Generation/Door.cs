@@ -24,13 +24,10 @@ public class Door : MonoBehaviour
         {
             Vector2Int moveDir = GetDirectionOffset();
 
-            _TileGeneration.loadRoomX += moveDir.x;
-            _TileGeneration.loadRoomY += moveDir.y;
+            _TileGeneration.currentRoomPos += moveDir;
 
             Transform _player = GameObject.FindWithTag("Player").transform;
             _player.position = new Vector3(0.5f, 0.5f, 0);
-
-            _TileGeneration.currentRoomPos = new(_TileGeneration.loadRoomX, _TileGeneration.loadRoomY);
             RoomManager.Instance.LoadRoom(_TileGeneration.tilemap, _TileGeneration.currentRoomPos);
             _TileGeneration.miniMap.UpdateRooms(_TileGeneration.currentRoomPos);
         }

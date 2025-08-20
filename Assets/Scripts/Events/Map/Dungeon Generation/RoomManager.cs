@@ -25,19 +25,28 @@ public class RoomManager : MonoBehaviour
 
     public void LoadRoom(Tilemap tilemap, Vector2Int roomPosition)
     {
+        ClearInstantiatedObjects();
         tilemap.ClearAllTiles();
 
         if (!savedRooms.ContainsKey(roomPosition))
-        {
             return;
-        }
 
         RoomData room = savedRooms[roomPosition];
 
-        foreach (TileData tileData in room.tiles)
+        foreach (var tileData in room.tiles.Values)
         {
             Vector3Int pos = new(tileData.position.x, tileData.position.y, 0);
             tilemap.SetTile(pos, tileData.tile);
+        }
+
+        tilemap.RefreshAllTiles();
+    }
+    public void ClearInstantiatedObjects()
+    {
+        for (int i = tilemap.transform.childCount - 1; i >= 0; i--)
+        {
+            GameObject child = tilemap.transform.GetChild(i).gameObject;
+            Destroy(child);
         }
     }
 }

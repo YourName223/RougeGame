@@ -179,9 +179,7 @@ public class MiniMapController : MonoBehaviour
         Transform _player = GameObject.FindWithTag("Player").transform;
         _player.position = new Vector3(0.5f, 0.5f, 0);
 
-        _TileGeneration.loadRoomX = roomCoordinates.x;
-        _TileGeneration.loadRoomY = roomCoordinates.y;
-        _TileGeneration.currentRoomPos = new(_TileGeneration.loadRoomX, _TileGeneration.loadRoomY);
+        _TileGeneration.currentRoomPos = roomCoordinates;
         RoomManager.Instance.LoadRoom(_TileGeneration.tilemap, _TileGeneration.currentRoomPos);
         UpdateRooms(roomCoordinates);
     }

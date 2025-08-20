@@ -1,302 +1,250 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class TileGeneration : MonoBehaviour
 {
     public MiniMapController miniMap;
     public Tilemap tilemap;
     public TileBase tileToPlace;
-    public int loadRoomX;
-    public int loadRoomY;
+
     public Vector2Int currentRoomPos;
 
-    private int _width;
-    private int _height;
-    private Vector3Int _pos3D;
+    private int _width, _height, _size;
 
-    void Start()
+    private void Start()
     {
         GenerateFloor();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            loadRoomX += 1;
-            currentRoomPos = new(loadRoomX, loadRoomY);
-            RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
-            miniMap.UpdateRooms(currentRoomPos);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad8))
-        {
-            loadRoomX -= 1;
-            currentRoomPos = new(loadRoomX, loadRoomY);
-            RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
-            miniMap.UpdateRooms(currentRoomPos);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            loadRoomY += 1;
-            currentRoomPos = new(loadRoomX, loadRoomY);
-            RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
-            miniMap.UpdateRooms(currentRoomPos);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            loadRoomY -= 1;
-            currentRoomPos = new(loadRoomX, loadRoomY);
-            RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
-            miniMap.UpdateRooms(currentRoomPos);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            GenerateFloor();
-        }
+        // Room navigation controls (numpad)
+        if (Input.GetKeyDown(KeyCode.Keypad2)) MoveRoom(1, 0);
+        else if (Input.GetKeyDown(KeyCode.Keypad8)) MoveRoom(-1, 0);
+        else if (Input.GetKeyDown(KeyCode.Keypad6)) MoveRoom(0, 1);
+        else if (Input.GetKeyDown(KeyCode.Keypad4)) MoveRoom(0, -1);
+        else if (Input.GetKeyDown(KeyCode.Keypad5)) GenerateFloor();
     }
 
-    public void RoomGeneration()
+    private void MoveRoom(int deltaX, int deltaY)
     {
-        RoomData room = new();
-        room.roomType = RoomType.Normal; // Or assign later
-
-        for (int x = -_width / 2; x < _width / 2 + (_width % 2); x++)
-        {
-            for (int y = -_height / 2; y < _height / 2 + (_height % 2); y++)
-            {
-                Vector2Int pos2D = new(x, y);
-                var existingTile = room.tiles.Find(t => t.position == pos2D);
-                if (existingTile != null)
-                {
-                    existingTile.tile = tileToPlace; // update tile
-                }
-                else
-                {
-                    room.tiles.Add(new TileData { position = pos2D, tile = tileToPlace });
-                }
-            }
-        }
-
-        RoomManager.Instance.savedRooms[currentRoomPos] = room;
-    }
-
-    public void RoomDoorGeneration() 
-    {
-        RoomData loadedRoom = RoomManager.Instance.savedRooms[currentRoomPos];
-
-        // Variables for bounds of the room
-        int minX = int.MaxValue;
-        int maxX = int.MinValue;
-        int minY = int.MaxValue;
-        int maxY = int.MinValue;
-
-        // Find bounds of the room
-        foreach (TileData tileData in loadedRoom.tiles)
-        {
-            Vector2Int pos = tileData.position;
-            if (pos.x < minX) minX = pos.x;
-            if (pos.x > maxX) maxX = pos.x;
-            if (pos.y < minY) minY = pos.y;
-            if (pos.y > maxY) maxY = pos.y;
-        }
-
-        // Find room center
-        int centerX = (minX + maxX) / 2;
-        int centerY = (minY + maxY) / 2;
-
-        // Neighbor directions: Up, Down, Right, Left
-        Vector2Int[] directions = new Vector2Int[]
-        {
-        new(-1, 0),  // Up
-        new(1, 0), // Down
-        new(0, 1),  // Right
-        new(0, -1)  // Left
-        };
-
-        foreach (Vector2Int dir in directions)
-        {
-            Vector2Int neighborPos = currentRoomPos + dir;
-
-            if (RoomManager.Instance.savedRooms.ContainsKey(neighborPos))
-            {
-                RoomType neightborType = RoomManager.Instance.savedRooms[neighborPos].roomType;
-
-                RoomData room = RoomManager.Instance.savedRooms[currentRoomPos];
-
-                //Checks if theres a neightbor room, if there is and its not hidden, then place door
-                if (dir == new Vector2Int(-1, 0) && neightborType != RoomType.Hidden) // Up
-                {
-                    Vector2Int doorPos = new(centerX, maxY + 1);
-                    var existingTile = room.tiles.Find(t => t.position == doorPos);
-                    if (existingTile != null)
-                    {
-                        existingTile.tile = tileToPlace; // update tile
-                    }
-                    else
-                    {
-                        room.tiles.Add(new TileData { position = doorPos, tile = tileToPlace });
-                    }
-                }
-                else if (dir == new Vector2Int(1, 0) && neightborType != RoomType.Hidden) // Down
-                {
-                    Vector2Int doorPos = new(centerX, minY - 1);
-                    var existingTile = room.tiles.Find(t => t.position == doorPos);
-                    if (existingTile != null)
-                    {
-                        existingTile.tile = tileToPlace; // update tile
-                    }
-                    else
-                    {
-                        room.tiles.Add(new TileData { position = doorPos, tile = tileToPlace });
-                    }
-                }
-                else if (dir == new Vector2Int(0, 1) && neightborType != RoomType.Hidden) // Right
-                {
-                    Vector2Int doorPos = new(maxX + 1, centerY);
-                    var existingTile = room.tiles.Find(t => t.position == doorPos);
-                    if (existingTile != null)
-                    {
-                        existingTile.tile = tileToPlace; // update tile
-                    }
-                    else
-                    {
-                        room.tiles.Add(new TileData { position = doorPos, tile = tileToPlace });
-                    }
-                }
-                else if (dir == new Vector2Int(0, -1) && neightborType != RoomType.Hidden) // Left
-                {
-                    Vector2Int doorPos = new(minX - 1, centerY);
-                    var existingTile = room.tiles.Find(t => t.position == doorPos);
-                    if (existingTile != null)
-                    {
-                        existingTile.tile = tileToPlace; // update tile
-                    }
-                    else
-                    {
-                        room.tiles.Add(new TileData { position = doorPos, tile = tileToPlace });
-                    }
-                }
-            }
-        }
-    }
-
-    private void GenerateFloor() 
-    {
-        RoomManager.Instance.ClearSavedRooms();
-        miniMap.ClearRooms();
-
-        loadRoomY = 0;
-        loadRoomX = 0;
-
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 5; y++)
-            {
-                currentRoomPos = new(x, y);
-                _width = Random.Range(5, 6);
-                _height = Random.Range(5, 6);
-                RoomGeneration();
-
-                RoomType roomType = RoomType.Normal;
-
-                if (Random.value < 0.3f)
-                    roomType = RoomType.Hidden;
-                if (Random.value < 0.2f)
-                    roomType = RoomType.Shop;
-                if (Random.value < 0.1f)
-                    roomType = RoomType.Boss;
-
-                RoomManager.Instance.savedRooms[currentRoomPos].roomType = roomType;
-
-                RoomWallGeneration();
-            }
-        }
-
-        for (int x = 0; x < 5; x++)
-        {
-            for (int y = 0; y < 5; y++)
-            {
-                currentRoomPos = new(x, y);
-
-                RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
-
-                RoomDoorGeneration();
-            }
-        }
-
-        currentRoomPos = new(0, 0);
+        currentRoomPos += new Vector2Int(deltaX, deltaY);
         RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
         miniMap.UpdateRooms(currentRoomPos);
     }
 
-    public void RoomWallGeneration()
+    public void RoomGeneration()
     {
-        RoomData loadedRoom = RoomManager.Instance.savedRooms[currentRoomPos];
+        //GenerateSquareRoom();
+        //GenerateLineRoom();
+        GenerateCircleRoom();
+    }
 
-        HashSet<Vector2Int> floorPositions = new();
-        foreach (TileData tileData in loadedRoom.tiles)
+    public void GenerateFloor()
+    {
+        RoomManager.Instance.ClearSavedRooms();
+        miniMap.ClearRooms();
+
+        for (int x = 0; x < 5; x++)
+            for (int y = 0; y < 5; y++)
+            {
+                currentRoomPos = new Vector2Int(x, y);
+                RoomGeneration();
+
+                // Randomize room type
+                RoomType type = RoomType.Normal;
+                if (Random.value < 0.1f) type = RoomType.Boss;
+                else if (Random.value < 0.2f) type = RoomType.Shop;
+                else if (Random.value < 0.3f) type = RoomType.Hidden;
+
+                RoomManager.Instance.savedRooms[currentRoomPos].roomType = type;
+
+                GenerateRoomWalls();
+            }
+
+        // Load all rooms and generate doors
+        for (int x = 0; x < 5; x++)
+            for (int y = 0; y < 5; y++)
+            {
+                currentRoomPos = new Vector2Int(x, y);
+                RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
+                GenerateRoomDoors();
+            }
+
+        currentRoomPos = Vector2Int.zero;
+        RoomManager.Instance.LoadRoom(tilemap, currentRoomPos);
+        miniMap.UpdateRooms(currentRoomPos);
+    }
+
+    public void GenerateRoomDoors()
+    {
+        if (!RoomManager.Instance.savedRooms.TryGetValue(currentRoomPos, out RoomData currentRoom)) return;
+
+        int minX = int.MaxValue, maxX = int.MinValue, minY = int.MaxValue, maxY = int.MinValue;
+
+        foreach (var tileData in currentRoom.tiles.Values)
+        {
+            var pos = tileData.position;
+            minX = Mathf.Min(minX, pos.x);
+            maxX = Mathf.Max(maxX, pos.x);
+            minY = Mathf.Min(minY, pos.y);
+            maxY = Mathf.Max(maxY, pos.y);
+        }
+
+        Vector2Int[] directions =
+        {
+            new(-1, 0), // Up
+            new(1, 0),  // Down
+            new(0, 1),  // Right
+            new(0, -1)  // Left
+        };
+
+        foreach (var dir in directions)
+        {
+            Vector2Int neighborPos = currentRoomPos + dir;
+            if (!RoomManager.Instance.savedRooms.TryGetValue(neighborPos, out RoomData neighborRoom)) continue;
+            if (neighborRoom.roomType == RoomType.Hidden) continue;
+
+            Vector2Int doorPos = dir switch
+            {
+                var d when d == new Vector2Int(-1, 0) => new Vector2Int(0, maxY + 1), // Up
+                var d when d == new Vector2Int(1, 0) => new Vector2Int(0, minY - 1),  // Down
+                var d when d == new Vector2Int(0, 1) => new Vector2Int(maxX + 1, 0),  // Right
+                var d when d == new Vector2Int(0, -1) => new Vector2Int(minX - 1, 0), // Left
+                _ => Vector2Int.zero
+            };
+
+            if (doorPos != Vector2Int.zero)
+                AddTile(doorPos, currentRoomPos);
+        }
+    }
+
+    public void GenerateRoomWalls()
+    {
+        if (!RoomManager.Instance.savedRooms.TryGetValue(currentRoomPos, out RoomData room)) return;
+
+        var floorPositions = new HashSet<Vector2Int>();
+        foreach (var tileData in room.tiles.Values)
             floorPositions.Add(tileData.position);
 
-        foreach (Vector2Int pos in floorPositions)
+        var placedWalls = new HashSet<Vector2Int>();
+
+        foreach (var pos in floorPositions)
         {
             bool hasUp = floorPositions.Contains(pos + Vector2Int.up);
             bool hasDown = floorPositions.Contains(pos + Vector2Int.down);
             bool hasLeft = floorPositions.Contains(pos + Vector2Int.left);
             bool hasRight = floorPositions.Contains(pos + Vector2Int.right);
 
-            if (hasUp && hasDown && hasLeft && hasRight)
-                continue;
+            if (hasUp && hasDown && hasLeft && hasRight) continue;
 
+            // Top walls
             if (!hasUp)
             {
-                SetWall(pos + Vector2Int.up);
-                SetWall(pos + Vector2Int.up * 2);
+                TryAddWall(pos + Vector2Int.up, placedWalls);
+                TryAddWall(pos + Vector2Int.up * 2, placedWalls);
 
-                // Diagonal upper corners
-                SetWall(pos + new Vector2Int(-1, 1));
-                SetWall(pos + new Vector2Int(1, 1));
-                SetWall(pos + new Vector2Int(-1, 2));
-                SetWall(pos + new Vector2Int(1, 2));
+                TryAddWall(pos + new Vector2Int(-1, 1), placedWalls);
+                TryAddWall(pos + new Vector2Int(1, 1), placedWalls);
+                TryAddWall(pos + new Vector2Int(-1, 2), placedWalls);
+                TryAddWall(pos + new Vector2Int(1, 2), placedWalls);
             }
 
+            // Bottom walls
             if (!hasDown)
             {
-                SetWall(pos + Vector2Int.down);
-                SetWall(pos + Vector2Int.down * 2);
+                TryAddWall(pos + Vector2Int.down, placedWalls);
+                TryAddWall(pos + Vector2Int.down * 2, placedWalls);
 
-                // Diagonal bottom corners
-                SetWall(pos + new Vector2Int(-1, -1));
-                SetWall(pos + new Vector2Int(1, -1));
-                SetWall(pos + new Vector2Int(-1, -2));
-                SetWall(pos + new Vector2Int(1, -2));
+                TryAddWall(pos + new Vector2Int(-1, -1), placedWalls);
+                TryAddWall(pos + new Vector2Int(1, -1), placedWalls);
+                TryAddWall(pos + new Vector2Int(-1, -2), placedWalls);
+                TryAddWall(pos + new Vector2Int(1, -2), placedWalls);
             }
 
+            // Left wall
             if (!hasLeft)
-            {
-                SetWall(pos + Vector2Int.left);
-            }
+                TryAddWall(pos + Vector2Int.left, placedWalls);
 
+            // Right wall
             if (!hasRight)
-            {
-                SetWall(pos + Vector2Int.right);
-            }
+                TryAddWall(pos + Vector2Int.right, placedWalls);
         }
     }
 
-    private void SetWall(Vector2Int pos)
+    private void TryAddWall(Vector2Int pos, HashSet<Vector2Int> placedWalls)
     {
-        RoomData room = RoomManager.Instance.savedRooms[currentRoomPos];
-        var existingTile = room.tiles.Find(t => t.position == pos);
+        if (placedWalls.Contains(pos)) return;
+        AddTile(pos, currentRoomPos);
+        placedWalls.Add(pos);
+    }
 
-        if (existingTile != null)
+    private void AddTile(Vector2Int pos, Vector2Int roomPosition)
+    {
+        var room = RoomManager.Instance.savedRooms[roomPosition];
+        if (room.tiles.ContainsKey(pos))
         {
-            existingTile.tile = tileToPlace;
+            Debug.LogWarning($"Tile already exists at {pos} in room {roomPosition}");
+            return;
+        }
+
+        room.tiles[pos] = new TileData { position = pos, tile = tileToPlace };
+        Debug.Log($"Placed tile at {pos} in room {roomPosition} with tile {tileToPlace} (Type: {tileToPlace.GetType()})");
+    }
+
+    private void GenerateSquareRoom()
+    {
+        _size = Random.Range(3, currentRoomPos.y + 3);
+        var room = new RoomData();
+
+        int halfSize = _size / 2;
+        int extra = _size % 2;
+
+        for (int x = -halfSize; x < halfSize + extra; x++)
+            for (int y = -halfSize; y < halfSize + extra; y++)
+                room.tiles[new Vector2Int(x, y)] = new TileData { position = new Vector2Int(x, y), tile = tileToPlace };
+
+        RoomManager.Instance.savedRooms[currentRoomPos] = room;
+    }
+
+    private void GenerateLineRoom()
+    {
+        if (Random.Range(0, 2) == 1)
+        {
+            _width = Random.Range(5, 7);
+            _height = Random.Range(10, 21);
         }
         else
         {
-            room.tiles.Add(new TileData { position = pos, tile = tileToPlace });
+            _width = Random.Range(10, 21);
+            _height = Random.Range(5, 7);
         }
+
+        var room = new RoomData();
+
+        int halfWidth = _width / 2;
+        int widthExtra = _width % 2;
+        int halfHeight = _height / 2;
+        int heightExtra = _height % 2;
+
+        for (int x = -halfWidth; x < halfWidth + widthExtra; x++)
+            for (int y = -halfHeight; y < halfHeight + heightExtra; y++)
+                room.tiles[new Vector2Int(x, y)] = new TileData { position = new Vector2Int(x, y), tile = tileToPlace };
+
+        RoomManager.Instance.savedRooms[currentRoomPos] = room;
+    }
+
+    private void GenerateCircleRoom()
+    {
+        var room = new RoomData();
+        int radius = Random.Range(4, 7);
+
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
+                if (x * x + y * y <= radius * radius)
+                    room.tiles[new Vector2Int(x, y)] = new TileData { position = new Vector2Int(x, y), tile = tileToPlace };
+
+        RoomManager.Instance.savedRooms[currentRoomPos] = room;
     }
 }
