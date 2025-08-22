@@ -38,8 +38,6 @@ public class RoomManager : MonoBehaviour
             Vector3Int pos = new(tileData.position.x, tileData.position.y, 0);
             tilemap.SetTile(pos, tileData.tile);
         }
-
-        tilemap.RefreshAllTiles();
     }
     public void ClearInstantiatedObjects()
     {

@@ -5267,6 +5267,8 @@ MonoBehaviour:
   tilemap: {fileID: 1771208933}
   tileToPlace: {fileID: 11400000, guid: f17183cf39b605a4c80168048bd70e71, type: 2}
   currentRoomPos: {x: 0, y: 0}
+  minimapwidth: 5
+  minimapheight: 5
 --- !u!1 &1772013773
 GameObject:
   m_ObjectHideFlags: 0

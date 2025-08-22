@@ -20,6 +20,7 @@ public class MiniMapController : MonoBehaviour
     private Vector2Int _previousRoomPos;
     private Dictionary<Vector2Int, Image> _roomCells;
     private Sprite _sprite;
+    private Vector2Int[] neighbors;
 
     void Start()
     {
@@ -51,11 +52,11 @@ public class MiniMapController : MonoBehaviour
     }
 
     //Updates the minimap
-    public void UpdateRooms(Vector2Int newRoomPos)
+    public void UpdateRooms(Vector2Int RoomPos)
     {
         DrawLastRoom();
 
-        DrawCurrentRoom(newRoomPos);
+        DrawCurrentRoom(RoomPos);
 
         DrawNearbyRooms();
 
@@ -74,9 +75,9 @@ public class MiniMapController : MonoBehaviour
             }
         }
     }
-    private void DrawCurrentRoom(Vector2Int newRoomPos)
+    private void DrawCurrentRoom(Vector2Int RoomPos)
     {
-        _currentRoomPos = newRoomPos;
+        _currentRoomPos = RoomPos;
         if (_roomCells.TryGetValue(_currentRoomPos, out var newCell))
         {
             newCell.sprite = current;
@@ -86,7 +87,7 @@ public class MiniMapController : MonoBehaviour
     private void DrawNearbyRooms() 
     {
         // Define the 4 neighbors (up, down, left, right)
-        Vector2Int[] neighbors = new Vector2Int[]
+        neighbors = new Vector2Int[]
         {
         new(_currentRoomPos.x + 1, _currentRoomPos.y),
         new(_currentRoomPos.x - 1, _currentRoomPos.y),
@@ -106,7 +107,7 @@ public class MiniMapController : MonoBehaviour
             {
                 continue;
             }
-            //Find the room type and draws that sprite on the room
+            //Find the room type and draws that sprite on the room if it is not hidden
             GetRoomVisuals(neighborPos, out _sprite);
             if (_sprite != hidden)
             {
@@ -177,7 +178,7 @@ public class MiniMapController : MonoBehaviour
     public void TeleportToRoom(Vector2Int roomCoordinates)
     {
         Transform _player = GameObject.FindWithTag("Player").transform;
-        _player.position = new Vector3(0.5f, 0.5f, 0);
+        _player.position = new Vector3(0, 0, 0);
 
         _TileGeneration.currentRoomPos = roomCoordinates;
         RoomManager.Instance.LoadRoom(_TileGeneration.tilemap, _TileGeneration.currentRoomPos);

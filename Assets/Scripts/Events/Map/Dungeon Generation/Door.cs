@@ -26,8 +26,22 @@ public class Door : MonoBehaviour
 
             _TileGeneration.currentRoomPos += moveDir;
 
-            Transform _player = GameObject.FindWithTag("Player").transform;
-            _player.position = new Vector3(0.5f, 0.5f, 0);
+            RoomManager.Instance.savedRooms.TryGetValue(_TileGeneration.currentRoomPos, out RoomData currentRoom);
+
+            Vector2Int entryDir = new(-moveDir.x, -moveDir.y);
+            Vector2Int doorTilePos;
+
+            if (currentRoom.doorPositions.TryGetValue(entryDir, out doorTilePos))
+            {
+                // Set player to that door position with a small offset
+                Transform _player = GameObject.FindWithTag("Player").transform;
+                _player.position = new Vector3(doorTilePos.x + 0.5f + moveDir.y * 2, doorTilePos.y + 0.7f - moveDir.x * 3, 0);
+            }
+            else
+            {
+                Debug.LogWarning("No door position found for entry direction.");
+            }
+
             RoomManager.Instance.LoadRoom(_TileGeneration.tilemap, _TileGeneration.currentRoomPos);
             _TileGeneration.miniMap.UpdateRooms(_TileGeneration.currentRoomPos);
         }
