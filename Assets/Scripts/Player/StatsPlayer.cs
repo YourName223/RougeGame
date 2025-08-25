@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class StatsPlayer : MonoBehaviour
 {
-    public int defence;
-    public int evasion;
-    public int vitality;
-    public int power;
-    public int attackSpeed;
-    public int reloadSpeed;
-    public int movementSpeed;
+    [HideInInspector] public int defence;
+    [HideInInspector] public int evasion;
+    [HideInInspector] public int vitality;
+    [HideInInspector] public int power;
+    [HideInInspector] public int attackSpeed;
+    [HideInInspector] public int reloadSpeed;
+    [HideInInspector] public int movementSpeed;
 
-    private void Start()
+    private void Awake()
     {
         defence = 0;
         evasion = 0;
-        vitality = 3;
+        vitality = 100;
         power = 0;
         attackSpeed = 0;
         reloadSpeed = 0;
         movementSpeed = 0;
-    } 
+    }
 }
 
 

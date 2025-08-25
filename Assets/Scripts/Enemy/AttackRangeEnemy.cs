@@ -15,15 +15,17 @@ public class AttackRangeEnemy : MonoBehaviour, IAttack
     private Collider2D _attackCollider;
     private SpriteRenderer _spriteRenderer;
     private TrailRenderer _trail;
-
+    void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _attackCollider = GetComponent<Collider2D>();
+        _trail = GetComponent<TrailRenderer>();
+    }
     void Start()
     {
-        _trail = GetComponent<TrailRenderer>();
         _hasHit = false;
-        _attackCollider = transform.GetComponent<Collider2D>();
         _attackCollider.enabled = false;
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
     }
 
     public void UpdateVariables(float knockbackPower, int dmg, Vector2 direction, float angle, float attackTimer, Vector3 position)
@@ -39,8 +41,8 @@ public class AttackRangeEnemy : MonoBehaviour, IAttack
     {
         transform.SetPositionAndRotation(_position, Quaternion.Euler(0f, 0f, _angle));
         _rigidbody.linearVelocity = _direction.normalized * 5;
-        _spriteRenderer.sortingOrder = 2;
-        _trail.sortingOrder = 2;
+        _spriteRenderer.sortingOrder = 3;
+        _trail.sortingOrder = 3; 
         _hasHit = false;
         _attackCollider.enabled = true;
     }

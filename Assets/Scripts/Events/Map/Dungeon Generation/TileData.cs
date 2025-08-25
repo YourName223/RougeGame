@@ -10,6 +10,20 @@ public enum RoomType
     Shop,
     Hidden,
 }
+public enum RoomLayout
+{
+    Square,
+    Line, 
+    Circle, 
+    TwoSquare,
+    Cross, 
+    CrossMiddle,
+    CrossEnds,
+    Ladder,
+    CrossCircle,
+    MN,
+    TwoLine,
+}
 
 [Serializable]
 public class TileData
@@ -27,4 +41,6 @@ public class RoomData
     public Dictionary<Vector2Int, TileData> tiles = new();
 
     public RoomType roomType = RoomType.Normal; // Default to Normal
+
+    public RoomLayout roomLayout = RoomLayout.Square;
 }

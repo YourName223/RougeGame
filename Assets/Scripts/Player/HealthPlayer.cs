@@ -1,28 +1,34 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class HealthPlayer : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
+    [SerializeField] private HealthBar _healthBar; 
+    [SerializeField] private StatsPlayer _playerStats;
+    [SerializeField] private GameOverScreen _gameOverScreen;
 
-    [SerializeField] private HealthBar healthBar;
-    [SerializeField] private GameOverScreen GameOverScreen;
-
+    private int maxHealth;
     private int _currentHealth;
 
     private HandleAnimation _animationHandler;
 
     void Start()
     {
+        maxHealth = _playerStats.vitality;
         _currentHealth = maxHealth;
         _animationHandler = GetComponent<HandleAnimation>();
-        healthBar.SetMaxHealth(maxHealth);
+        _healthBar.SetMaxHealth(maxHealth);
     }
 
     public void TakeDamage(int amount)
     {
-        _currentHealth -= amount;
-        healthBar.SetHealth(_currentHealth);
+        if (Random.Range(0,1) > Mathf.Pow(0.99f,_playerStats.evasion))
+        {
+            return;
+        }
+        _currentHealth -= Mathf.RoundToInt(amount * Mathf.Pow(0.99f, _playerStats.defence));
+        _healthBar.SetHealth(_currentHealth);
 
         if (_currentHealth <= 0)
         {
@@ -43,7 +49,7 @@ public class HealthPlayer : MonoBehaviour
     {
         _animationHandler.SetState(State.Dying);
 
-        GameOverScreen.gameObject.SetActive(true);
-        GameOverScreen.Set();
+        _gameOverScreen.gameObject.SetActive(true);
+        _gameOverScreen.Set();
     }
 }

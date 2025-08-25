@@ -17,7 +17,7 @@ public class HandleAnimation : MonoBehaviour
     [HideInInspector] public float x;
 
     private State _currentState;
-    private Animator _anim;
+    public Animator _anim;
     private SpriteRenderer _spriteRenderer;
     private AnimatorStateInfo _stateInfo;
 
@@ -26,7 +26,6 @@ public class HandleAnimation : MonoBehaviour
     {
         _currentState = State.Idle;
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame

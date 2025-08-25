@@ -5,10 +5,13 @@ using UnityEngine.Tilemaps;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance;
+
     public Tilemap tilemap;
     public TileBase tileToPlace;
 
     public Dictionary<Vector2Int, RoomData> savedRooms = new();
+
+    [SerializeField] private EnemySpawner _enemySpawner;
 
     void Awake()
     {
@@ -38,6 +41,8 @@ public class RoomManager : MonoBehaviour
             Vector3Int pos = new(tileData.position.x, tileData.position.y, 0);
             tilemap.SetTile(pos, tileData.tile);
         }
+
+        _enemySpawner.SpawnEnemies(savedRooms[roomPosition].roomLayout);
     }
     public void ClearInstantiatedObjects()
     {

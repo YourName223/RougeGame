@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Player\AttackPlayer.cs" />
     <Compile Include="Assets\Scripts\Events\Inventory\InventoryScreen.cs" />
     <Compile Include="Assets\Scripts\Events\Item.cs" />
+    <Compile Include="Assets\Scripts\Events\Map\Dungeon Generation\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Enemy\FollowEnemy.cs" />
     <Compile Include="Assets\Scripts\Events\Inventory\InventoryManager.cs" />
   </ItemGroup>

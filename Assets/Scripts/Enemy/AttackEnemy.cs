@@ -23,9 +23,8 @@ public class AttackEnemy : MonoBehaviour
     void Start()
     {
         _timer = _attackCooldown;
-        _attackPrefab = Instantiate(_attackPrefab, transform.position, Quaternion.identity);
-        _player = GameObject.FindWithTag("Player").transform;
-        _attackScript = _attackPrefab.GetComponent<IAttack>();
+        _player = GameObject.FindWithTag("Player").transform; 
+        _attackScript = GetComponentInChildren<IAttack>();
     }
 
     void Update()
@@ -44,7 +43,7 @@ public class AttackEnemy : MonoBehaviour
         else if (_canAttack && Mathf.Abs(_distanceToPlayer) >= _minRange && Mathf.Abs(_distanceToPlayer) <= _maxRange) 
         {
             _timer = 0;
-            _attackScript.Attack();
+            _attackScript.Attack(); 
         }
     }
 }

@@ -65,10 +65,11 @@ public class AttackMeleeEnemy : MonoBehaviour, IAttack
         {
             HealthPlayer playerHP = collision.gameObject.GetComponent<HealthPlayer>();
             MovementPlayer playerMov = collision.gameObject.GetComponent<MovementPlayer>();
+            Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
 
             if (playerHP != null)
             {
-                playerMov.KnockBack((_player.position - transform.position).normalized, _knockbackPower);
+                playerMov.KnockBack((body.position - (Vector2)transform.position).normalized, _knockbackPower);
 
                 playerHP.TakeDamage(_damage);
                 _hasHit = true;

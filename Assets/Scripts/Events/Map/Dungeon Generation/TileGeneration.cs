@@ -12,7 +12,7 @@ public class TileGeneration : MonoBehaviour
     public int minimapwidth;
     public int minimapheight;
 
-    private int _width, _height, _size;
+    private int _size;
     private Stopwatch stopwatch;
 
     private void Start()
@@ -72,7 +72,7 @@ public class TileGeneration : MonoBehaviour
     private void RoomGeneration()
     {
         var room = new RoomData();
-        switch (Random.Range(1, 11))
+        switch (Random.Range(1, 12))
         {
             case 1:
                 GenerateSquareRoom(room);
@@ -84,7 +84,7 @@ public class TileGeneration : MonoBehaviour
                 GenerateCircleRoom(room);
                 break;
             case 4:
-                Generate2SquareRoom(room);
+                GenerateTwoSquareRoom(room);
                 break;
             case 5:
                 GenerateCrossRoom(room);
@@ -105,7 +105,7 @@ public class TileGeneration : MonoBehaviour
                 GenerateMNRoom(room);
                 break;
             case 11:
-                Generate2LineRoom(room);
+                GenerateTwoLineRoom(room);
                 break;
         }
         RoomManager.Instance.savedRooms[currentRoomPos] = room;
@@ -226,17 +226,19 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateSquareRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.Square;
         _size = Random.Range(15, 15);
         AddBoxTiles(_size, _size, room, Vector2Int.zero);
     }
-    private void Generate2SquareRoom(RoomData room)
+    private void GenerateTwoSquareRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.TwoSquare;
         _size = 9;
 
         int halfSize = _size / 2;
         int extra = _size % 2;
 
-        Vector2Int offSet = new Vector2Int(halfSize - 1, halfSize - 1);
+        Vector2Int offSet = new(halfSize - 1, halfSize - 1);
 
         for (int i = 0; i < 2; i++)
         {
@@ -246,6 +248,7 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateLineRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.Line;
         if (Random.Range(0, 2) == 1)
         {
             AddBoxTiles(5, 15, room, Vector2Int.zero);
@@ -257,25 +260,28 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateCircleRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.Circle;
         int radius = Random.Range(5, 9);
 
         AddCircleTiles(radius, room, Vector2Int.zero);
     }
     private void GenerateCrossRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.Cross;
         AddBoxTiles(5, 25, room, Vector2Int.zero);
         AddBoxTiles(25, 5, room, Vector2Int.zero);
     }
     private void GenerateCrossEndsRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.CrossEnds;
         AddBoxTiles(3, 21, room, Vector2Int.zero);
         AddBoxTiles(21, 3, room, Vector2Int.zero);
         Vector2Int[] offsets = new Vector2Int[]
         {
-            new Vector2Int(-11, 0),  // Left
-            new Vector2Int(11, 0),   // Right
-            new Vector2Int(0, 11),   // Up
-            new Vector2Int(0, -11),  // Down
+            new(-11, 0),  // Left
+            new(11, 0),   // Right
+            new(0, 11),   // Up
+            new(0, -11),  // Down
         };
         for (int i = 0; i < 4; i++)
         {
@@ -284,6 +290,7 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateCrossMiddleRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.CrossMiddle;
         if (currentRoomPos.x == 0)
         {
             AddBoxTiles(3, 13, room, new Vector2Int(0, -5));
@@ -312,6 +319,7 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateLadderRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.Ladder;
         if (Random.Range(0, 2) == 1)
         {
             AddBoxTiles(3, 25, room, Vector2Int.zero);
@@ -329,12 +337,14 @@ public class TileGeneration : MonoBehaviour
     }
     private void GenerateCrossCircleRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.CrossCircle;
         AddBoxTiles(3, 25, room, Vector2Int.zero);
         AddBoxTiles(25, 3, room, Vector2Int.zero);
         AddCircleTiles(6, room, Vector2Int.zero);
     }
     private void GenerateMNRoom(RoomData room)
     {
+        room.roomLayout = RoomLayout.MN;
         AddBoxTiles(25, 25, room, Vector2Int.zero);
         RemoveBoxTiles(19, 15, room, Vector2Int.zero);
         RemoveBoxTiles(15, 19, room, Vector2Int.zero);
@@ -342,8 +352,9 @@ public class TileGeneration : MonoBehaviour
         AddBoxTiles(21, 3, room, Vector2Int.zero);
         AddBoxTiles(9, 9, room, Vector2Int.zero);
     }
-    private void Generate2LineRoom(RoomData room) 
+    private void GenerateTwoLineRoom(RoomData room) 
     {
+        room.roomLayout = RoomLayout.TwoLine;
         if (Random.Range(0, 2) == 1)
         {
             AddBoxTiles(5, 13, room, new Vector2Int(1, 4)); 
